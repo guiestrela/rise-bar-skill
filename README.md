@@ -11,6 +11,7 @@ This repository contains the skill and its supporting references. The Rise Bar a
 - Explains the shared QML architecture so changes preserve variant behavior and avoid duplicated implementations.
 - Guides crash and hang diagnosis using process logs, journals, core dumps, and isolated probes.
 - Supports code reviews, QML warning fixes, and relevant regression checks.
+- Covers external widget adaptation, OneDrive integration, expanded slots, native text, and reactive Rise styling in [widget-integration.md](rise-bar/references/widget-integration.md).
 - Preserves user settings, saved state, local changes, and other enabled Omarchy plugins.
 
 ## Hyprland and Omarchy support
@@ -116,4 +117,4 @@ See [SKILL.md](rise-bar/SKILL.md) for the complete workflow.
 
 ## Download package
 
-The distributable is `dist/rise-bar-skill-0.1.0.zip`, with its checksum in `dist/SHA256SUMS`. It includes the full skill, references, MIT license, README, version, changelog, and [validation report](VALIDATION.md). Extract it before following local installation instructions. Platform acceptance must still be checked on Agensi; producing this archive does not publish it.
+The distributable is `dist/rise-bar-skill-0.1.2.zip`, with its checksum in `dist/SHA256SUMS`. It includes the full skill, references, MIT license, README, version, changelog, and [validation report](VALIDATION.md). Extract it before following local installation instructions. Platform acceptance must still be checked on Agensi; producing this archive does not publish it.

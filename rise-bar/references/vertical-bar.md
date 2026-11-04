@@ -14,11 +14,12 @@ runs when changing widgets.
 
 `standardizeSurface()` removes backgrounds and borders from widgets' direct
 children; it does not reach backgrounds loaded through a `Loader`.
-The V1 wrappers for `CpuTemperatureWidget.qml` and `StorageWidget.qml` use
-`backgroundComponent: null` when `barVertical` is true to avoid double frames.
-Preserve their own backgrounds in horizontal mode. When adding shared widgets,
-check which component draws the surface before adding another background or
-border.
+The V1 wrappers for `CpuTemperatureWidget.qml`, `OneDriveWidget.qml`, and
+`StorageWidget.qml` use `backgroundComponent: null` when `barVertical` is true
+to avoid double frames. `NordVPNWidget.qml` follows the same shared Loader
+surface contract. Preserve their own backgrounds in horizontal mode. When
+adding shared widgets, check which component draws the surface before adding
+another background or border.
 
 IDs differ between variants: temperature/storage use G20/G21 in V1 and
 G16/G18 in V2. Do not transfer orders or preferences between these IDs.
@@ -45,6 +46,8 @@ The vertical G8 group uses icon-only weather and a compact clock. Publish distin
 
 Workspaces reuse `WorkspaceWidget.qml`: a column on the sides and a row in Top/Bottom; preserve styles and the 5/10/active modes. The animated frame must follow the correct axis. Do not overwrite saved compactness settings to achieve vertical mode: derive the presentation from `barVertical`.
 
+For the expanded slot capacities, empty-target persistence and scaled drag hit testing, see [widget-integration.md](widget-integration.md). V1 empty targets use the rail surface vertically and are visible only while editing.
+
 Drag operations capture source and destination before changing models: the change may destroy the delegate. Do not access the delegate after the swap. Preserve anchor isolation and window recovery for each output.
 
 ## Evidence and tests
@@ -54,6 +57,8 @@ Run relevant tests without touching real accounts, monitors, or services:
 ```bash
 python3 tests/test-vertical-bar-layout.py
 python3 tests/test-v1-vertical-bar.py
+python3 tests/test-v1-empty-slots.py
+node --test tests/expanded-bar-slots.test.mjs
 python3 tests/test-vertical-workspaces.py
 python3 tests/v2-default-layout-regression.py
 node --test tests/bar-style-settings.test.mjs

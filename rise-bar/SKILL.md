@@ -39,6 +39,7 @@ Use `omarchy plugin update io.github.guiestrela.quickshell-rise` to update throu
 - `core/StateService.qml`, `VariantHost.qml`, and `IpcRouter.qml` control state, loading, and IPC. Only the selected variant should be instantiated.
 - V1 is under `variants/V1/`; V2 is under `variants/V2/`. Each `VariantRoot.qml` creates bars for valid outputs; `BarSlot.qml` arranges widgets. Variant-specific presentation lives in `modules/` and `panels/`; shared behavior, services, controllers, components, panels, logic, and assets live under `shared/`.
 - Prefer the shared implementation when changing behavior used by both variants. Keep only real visual or composition differences in the V1/V2 wrappers, and preserve explicit namespace imports instead of recreating forwarding copies.
+- Keep horizontal widget capsules on the shared `root.pillH` contract. Shared Loader-based surfaces must own their centered `pillH` geometry; V1/V2 adapters should provide themed backgrounds and suppress them only in vertical mode, where the rail surface owns the frame.
 - Before fixing V1/V2, check whether the V2 file has its own implementation or only imports V1. Fix shared behavior without removing intentional visual differences.
 - Shared widget bodies now live in `shared/components/`, and the media panel in `shared/panels/MprisPanel.qml`. Inspect these before editing the small variant adapters. For further extractions, read the adapter and visual-equivalence guidance in [references/code-review.md](references/code-review.md).
 - Omarchy services read `fontFamily`, `position`, `barSize`, and `barHidden` from the bar entry point. These values must remain valid during loading and variant switching.
@@ -46,6 +47,8 @@ Use `omarchy plugin update io.github.guiestrela.quickshell-rise` to update throu
 - Preserve notifications, OSD, lock, idle, audio, networking, and other enabled plugins. Do not use `pkill quickshell`, disable plugins in bulk, or edit `/usr/share/omarchy/` to fix Rise.
 
 For V1/V2 vertical geometry, widget surfaces, or side panels, and V2 shell styles, read [references/vertical-bar.md](references/vertical-bar.md). For shared-component changes, also inspect `docs/shared-components-inventory.md` and `docs/shared-components-refactor-plan.md`.
+
+For adding or replacing a widget, adapting an external plugin, or styling OneDrive, read [references/widget-integration.md](references/widget-integration.md). It covers shared ownership, expanded slots and saved-order migration, native text and theme bindings, OneDrive preferences/timeouts, and validation without incidental account actions.
 
 Consult `docs/integrations.md`, `docs/usage.md`, and `docs/fan-control.md` in the checkout as appropriate for the affected integration. Do not invoke services with real accounts for a test that can use fixtures.
 
@@ -58,6 +61,8 @@ Before sharing logs, redact tokens, authorization headers, account identifiers, 
 Also inspect the process's own log: `quickshell log --pid <PID> --tail 200 --no-color`. Not every QML warning reaches the journal. If the sandbox cannot see the session's process or socket, that does not prove the shell is stopped; verify in the session context before restarting.
 
 Check memory/OOM and GPU messages for the relevant period. A SIGABRT in `QGuiApplicationPrivate::createPlatformIntegration` from a probe under `/tmp` may indicate failure to access the graphical session before QML loads; do not attribute it to the installed bar without evidence. Lint warnings do not prove a crash either.
+
+When Rise replaces the first-party Omarchy bar, the shell may log `Handler was registered but will not be used because another handler is registered for target omarchy.bar`. This is the first-party bar's existing IPC handler colliding with the replacement bar, not evidence that Rise failed. Confirm with `omarchy-shell shell ping`, plugin validation, and the full test runner before changing IPC or disabling unrelated plugins.
 
 Use isolated probes with simulated helpers. `offscreen` works for components without a layer-shell dependency; `PanelWindow` requires an accessible Wayland session. Check the socket before starting these tests. For headless tests, use a temporary runtime directory, a software backend, and `QT_QPA_PLATFORMTHEME=''` to avoid dependencies on the session's GTK/DBus environment.
 
