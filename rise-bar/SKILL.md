@@ -52,6 +52,21 @@ For adding or replacing a widget, adapting an external plugin, or styling OneDri
 
 Consult `docs/integrations.md`, `docs/usage.md`, and `docs/fan-control.md` in the checkout as appropriate for the affected integration. Do not invoke services with real accounts for a test that can use fixtures.
 
+## Regression-prone integration contracts
+
+Recent fixes exposed a few cross-layer boundaries worth checking when diagnosing or changing these features:
+
+- **Network and VPN are separate controls.** Network status/probes live in shared logic and services; NordVPN uses `shared/controllers/NordVpnController.qml`. A `limited` connectivity state should be reconciled with the latest successful internet ping before showing a limited-connection warning. Protocol changes must read back the active protocol and complete the reconnect flow when already connected. Exercise these paths with simulated command output.
+- **Bluetooth actions must use the selected device's adapter.** Pass the device's owning adapter and address to the helper; do not rely on `bluetoothctl`'s implicit default controller. Keep action parsing and timeout failures visible to the panel.
+- **Battery status has a helper contract.** `shared/panels/BatteryPanel.qml` consumes schema-versioned JSON from `scripts/rise-battery-status.py`. Keep UPower parsing, bounds and missing-data behavior in sync with that contract; use fixtures rather than querying or changing a real battery state.
+- **MPRIS selection is shared by the bar widget and media panel.** Inspect `shared/services/MprisSelect.qml` when player choice or controls fail. Ignore stale `playerctld` proxy entries, check player capabilities before invoking controls, and validate with multiple players and playback-stream state.
+- **Tray and layout dragging span shared and variant files.** Changes can involve `shared/components/TrayWidget.qml`, `shared/panels/TrayMenu.qml` or `TrayPanel.qml`, both `variants/V1/BarSlot.qml` and `variants/V2/BarSlot.qml`, and each variant's `Theme.qml`. While layout editing is unlocked, suppress hover tooltips and do not open the tray's full-screen backdrop at drag start; it can steal pointer events and cancel the drag. Validate locked/unlocked, hover, open-tray, drag-to-reorder and drag-to-tray states in both variants.
+- **Audio volume should use Omarchy's helper when available.** Preserve the `omarchy-audio-output-volume` path and the standalone fallback in `shared/logic/AudioWidgetLogic.js`; test command selection with a stub rather than changing live volume.
+
+### Wallpaper ownership conflicts
+
+Rise renders wallpapers in its own Wayland background surfaces. If images scan and can be selected but do not appear, check whether Omarchy’s wallpaper engine is also running; the two wallpaper owners can compete. A system theme change can start or reactivate Omarchy’s background engine, so verify wallpaper ownership again after changing themes. Logs may identify the competing process as `owe wallpaper engine daemon`. Disable only the Omarchy wallpaper engine when Rise is meant to own the desktop background; do not disable the Omarchy shell or unrelated plugins. Missing carousel thumbnail warnings affect previews and do not by themselves show that wallpaper application failed.
+
 ## Diagnose a crash or hang
 
 Distinguish a bar crash, a helper failure, and a system crash. Collect the PID, command line, and timestamp with `pgrep -a quickshell`, `coredumpctl list`, and `coredumpctl info <PID>`. Read the journal for the correct PID; the process may appear as `omarchy-shell` in the journal even though its executable is `quickshell`.
