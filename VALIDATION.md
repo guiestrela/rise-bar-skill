@@ -1,4 +1,52 @@
-# Validation report — 0.1.2
+# Validation report — 0.1.3
+
+Date: 2026-11-12. Inspected and deployed Rise candidate:
+`323bbac76af12b190b18248aa5093d7422dfcc3c`.
+
+## Verified implementation and installation
+
+- The checkout broad suite passed 75 check groups before ShellCheck was installed;
+  the supplemental ShellCheck run then passed for 41 shell files.
+- The final broad suite was rerun from the installed tree: **76 check groups
+  passed, no skipped groups**, including ShellCheck 0.11.0. It ended with
+  `ALL PLUGIN CHECKS PASSED` and exit 0.
+- QML lint analyzed 254 files and reported **135 warnings** in that final suite.
+  These were not suppressed or represented as zero warnings. Not every warning
+  has been eliminated or established as a tooling false positive.
+- Focused service, process, IPC and content probes passed. The composed V1/V2
+  adapter fixture passed 13 checks and produced 11 captures covering horizontal,
+  vertical, search, greetings, expanded globe, opening spin and moon states.
+- The native unmodified World Clock host compiled with the actual Omarchy
+  translation module, and the real English notification catalog key resolved.
+  The native V1/V2 import-graph and inert display-controller integration passed.
+- The installed and checkout commits matched. All 726 tracked paths were compared
+  for actual content/link target and executable mode; both Git worktrees were
+  clean after deployment.
+- The live session remained V2/active/ready, with an empty variant error and a
+  responsive shell ping. World Clock IPC returned three rows; its real V2 panel
+  opened, rendered the city list and globe, and closed successfully.
+- Five scoped preference/state files retained their pre-deployment hashes,
+  including the active variant, both widget settings, shell configuration and
+  Elsewhen preferences. Deployment used a backup outside the watched tree.
+- Fresh inspected logs contained no Rise/Elsewhen ReferenceError, TypeError or
+  component-unavailable failures after deployment.
+
+## Scope and remaining limits
+
+Clock edits, timezone mutation, profile/weather failures, keyboard/pointer and
+persistence paths were exercised with deterministic/inert backends where
+applicable. The live check did not change the OS timezone, user accounts,
+monitor layout, cities or saved preferences. It does not certify physical
+Bluetooth connections, OneDrive account sync, every live V1/vertical gesture,
+all fonts/locales, or absence of future defects. The unrelated USB Bluetooth
+controller failure is not claimed fixed by this World Clock release.
+
+Skill-package verification covers YAML metadata, local links, fenced shell
+syntax, distribution CRC/safe paths/content equality and SHA-256. No new
+independent behavior evaluation was run in Copilot, Claude, Cursor, Gemini or
+an MCP marketplace; the historical limitations below remain applicable.
+
+# Historical validation — 0.1.2
 
 Date: 2026-11-04. Documentation reflects local Rise HEAD
 `d147987a87de167f761c1467bbfeeb3ec57f3589` plus uncommitted OneDrive and slot

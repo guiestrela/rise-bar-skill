@@ -32,13 +32,13 @@ empty slots and base/extra metadata. Check earlier migration helpers too: a
 validator that only accepts older IDs can reject the new saved layout before
 its own migration runs.
 
-The local slot expansion gives V1 32 positions (15 left, 3 center, 14 right),
-including four empty targets per side and two extra center targets by default.
-Empty targets show only in edit mode and disappear without leaving gaps when
-locked. V2 allows up to 20 slots per side and 8 in the center through its `+`
-controls. Preserve the 22 unique widget IDs while accepting repeated empty
-strings; extend legacy region lists and split flags in place. Find G8 anywhere
-in the center model rather than assuming it occupies index zero.
+Read capacities and registered IDs from the current layout schema rather than
+copying counts from an older release. Empty targets show only in edit mode
+and collapse without gaps when locked. Preserve all registered widget IDs,
+including independent Indicators and World Clock entries where present, while
+accepting repeated empty strings. Extend legacy region lists and split flags
+in place, and check tray placements before inserting newly registered modules.
+Find G8 anywhere in the center model rather than assuming index zero.
 
 Drag hit testing must use mapped screen bounds at both corners when the bar
 scales to fit an output. When a widget leaves a Loader, its old implicit width
@@ -151,6 +151,60 @@ raised after an authorized quota diagnosis succeeded in 32.7 seconds while the
 old wrapper killed it at 30 seconds. Measure before changing a limit; do not
 hide failures, delete caches or restart services indiscriminately. Restarting
 the shell reloads UI code; it does not itself repair the OneDrive connection.
+
+## World Clock / Elsewhen
+
+Compare against the actual original under the installed Omarchy shell's
+`plugins/panels/elsewhen/`, not an obsolete Downloads copy. Read its manifest,
+Panel, HeroTitle, Globe, GlobeFooter and CityRow, and preserve attribution for
+ported components and data.
+
+Keep state and asynchronous work in `shared/services/ElsewhenService.qml` and
+`ElsewhenProcessAdapter.qml`; presentation lives in the shared Elsewhen panel
+and `shared/integrations/elsewhen/`. V1/V2 wrappers supply only genuine surface
+and placement differences. Do not merge the variants' entire Themes to avoid
+two small adapters.
+
+Validate city search/add/remove/reorder, duplicate-zone identity, people and
+profile enrichment, 12/24-hour and temperature units, daylight scrubbing,
+keyboard focus/Escape, home selection, globe drag/tilt/zoom/jump, opening spin,
+greetings, arc-caption fallback, moon animation, persistence and reopening.
+Make system-timezone changes require explicit confirmation; test success and
+failure with an inert backend, never by changing the user's real clock.
+
+The Rise-owned IPC target is `quickshell-rise.elsewhen`; do not duplicate
+`omarchy.elsewhen`. Use `open` rather than `show`, which collides with the
+Quickshell CLI subcommand. Read-only `times`, plus authorized `open`/`close`,
+can verify the installed target without modifying city preferences.
+
+Keep notification formatting and native `qs.Commons` translation imports in
+the production host. Offscreen tests must explicitly substitute external
+translation/notification I/O, not delete the feature. Supplement them with
+native compilation of the unmodified import graph. Inspect deterministic
+V1/V2 captures in both orientations and the live installed panel; report
+which interactions were simulated. Public weather/profile requests are not
+proof of private-account access or successful OS-timezone mutation.
+
+Focused commands from the Rise checkout, using its existing scratch policy:
+
+```bash
+python3 tests/test-elsewhen-panel-content.py
+python3 tests/test-elsewhen-service.py
+python3 tests/test-elsewhen-process-adapter.py
+python3 tests/test-elsewhen-ipc.py
+python3 tests/test-elsewhen-panel-adapters.py
+python3 tests/test-display-integration.py
+```
+
+## Bluetooth boundaries
+
+Resolve the owning `hciN` through BlueZ Adapter1.Address before using
+`bluetoothctl select`, which expects a controller address. Await connection
+and disconnection method replies; piping `quit` immediately afterward can
+end the client early. Read back actual connection state before claiming success.
+If direct pairing outside Rise causes kernel controller errors or power
+cycling, stop repeated trials and investigate the adapter/driver separately.
+Do not erase unrelated pairings or reset a connected mouse without consent.
 
 ## Focused validation
 

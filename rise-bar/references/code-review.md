@@ -68,6 +68,18 @@ Permission fixtures must control the simulated chain of trust. `/tmp` is writabl
 
 For headless tests, use a temporary runtime directory with mode 0700, `QT_QPA_PLATFORM=offscreen`, the software backend, and `QT_QPA_PLATFORMTHEME=''`. Failure to create an IPC socket under a sandbox may be an environmental restriction: confirm in the authorized context before modifying code. Do not ignore `ERROR` or declare success while a test is blocked.
 
+Long scratch paths can exceed the Unix-domain socket limit even when directory
+permissions are correct. Keep artifacts in the required scratch area and use
+a temporary short symlink in the user runtime directory when needed; remove
+it in `finally`/`trap`. Preserve the actual Wayland environment for native
+fixtures. Do not globally force `offscreen` for tests that instantiate
+PanelWindow, and do not suppress IPC errors to obtain a green run.
+
+Run `shellcheck --severity=warning` on the same shell-file set as the runner
+when ShellCheck becomes available after an earlier skipped run. Distinguish
+that supplemental result from rerunning the entire suite. Repeat the full
+runner from the installed tree after a broad reviewed deployment.
+
 Regressions that compare exact text may need adjustment after qualifying references. Preserve the assertion's intent and retain behavioral validation; do not weaken a test to make it pass. Also consider runtime diagnostics: QtTest may pass with `ReferenceError`, `TypeError`, `Binding loop`, or `Unable to assign` in the log.
 
 ## Apply without overwriting local differences

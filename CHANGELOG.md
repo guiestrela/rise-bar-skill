@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3 — 2026-11-12
+
+- Added World Clock/Elsewhen shared ownership, native-original comparison, interaction, IPC and translation/notification validation guidance.
+- Added staged rollback/takeover, actual-file comparisons, reviewed deployment and preserved-preference gates.
+- Replaced stale slot-count assumptions with current-schema discovery and tray-aware migration guidance.
+- Added scratch-path/Unix-socket diagnostics and installed-tree/ShellCheck verification boundaries.
+- Recorded the tested Rise candidate and live installation evidence without claiming warning-free lint or universal agent acceptance.
+- Rebuilt the versioned distribution and checksums.
+
 ## 0.1.2 — 2026-11-04
 
 - Updated OneDrive guidance for the OneDrive title, native UiText rendering, the V1 pill adapter and themed preferences.

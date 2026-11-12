@@ -1,11 +1,24 @@
 ---
 name: rise-bar
-description: Install, configure, develop, and diagnose Quickshell Rise Bar on Omarchy, including V1/V2 variants, widgets, and integrations. Use for requests about Rise Bar or Quickshell Rise; not for other bars or general desktop configuration.
+description: Maintain Rise Bar on Omarchy with verified V1/V2 workflows.
+version: 0.1.3
+author: Guilherme Estrela (guiestrela), Hermes Agent
+license: MIT
+platforms: [linux]
 ---
 
 # Rise Bar
 
 Maintain Rise while preserving the selected variant, saved settings, and the user's plugins. Respond in the user's language.
+
+## Acceptance and delivery
+
+- Keep one writer per affected file set. Pause earlier deployments when taking over or rolling back; preserve unfinished work before editing.
+- Compare actual file bytes and executable modes, not only branch names or commit IDs. Local edits can make equal commits different; a revert commit can have identical content to an older installed commit.
+- After a rejected update, develop on a separate branch from the restored base. Do not reapply the rejected update wholesale. Review the candidate, preserve preferences and back up outside the watched tree before installation.
+- Check the selected variant immediately before and after deployment. A ready IPC result alone does not prove a cached component was replaced; inspect fresh logs and the actual rendered panel.
+- Validate active glyphs and composed surfaces, not merely centered containers. Distinguish logic fixtures, native loading, rendered captures, and live interaction in reports.
+- Keep code and technical documentation in the project; keep execution reports in the user's requested notes location. Never claim all future defects are excluded by a green suite.
 
 If delivered through MCP (for example, Agensi), read linked references from the provider's text resources; relative links name bundled resources and do not imply local files. Request the missing reference through that provider before following a procedure that depends on it.
 
@@ -31,7 +44,7 @@ omarchy plugin list
 omarchy plugin validate "$HOME/.config/omarchy/plugins/io.github.guiestrela.quickshell-rise"
 ```
 
-Use `omarchy plugin update io.github.guiestrela.quickshell-rise` to update through the manager while respecting local modifications. Do not replace the entire installation with the checkout to apply a small fix. Compare files, preserve local differences, respect the user's stated backup preference, and apply only what is necessary. When creating a backup, keep it outside the plugin's watched tree. Restart with `omarchy restart shell` when the authorized change requires it; a reload may retain cached QML modules.
+Use `omarchy plugin update io.github.guiestrela.quickshell-rise` for a requested manager-driven update, not to deploy local uncommitted fixes. Compare files and apply only the reviewed changes, refusing independent installed edits. Keep a backup and deployment manifest outside the watched tree. Restart only the shell with `omarchy restart shell` when authorized and needed to clear cached QML; do not restart the graphical session or reset preferences.
 
 ## Preserve the architecture
 
@@ -49,6 +62,8 @@ Use `omarchy plugin update io.github.guiestrela.quickshell-rise` to update throu
 For V1/V2 vertical geometry, widget surfaces, or side panels, and V2 shell styles, read [references/vertical-bar.md](references/vertical-bar.md). For shared-component changes, also inspect `docs/shared-components-inventory.md` and `docs/shared-components-refactor-plan.md`.
 
 For adding or replacing a widget, adapting an external plugin, or styling OneDrive, read [references/widget-integration.md](references/widget-integration.md). It covers shared ownership, expanded slots and saved-order migration, native text and theme bindings, OneDrive preferences/timeouts, and validation without incidental account actions.
+
+For World Clock/Elsewhen, also follow that reference's World Clock section: compare the installed Omarchy original, preserve the shared coordinator, and cover city/globe/keyboard/IPC behavior and native translation imports before deployment.
 
 Consult `docs/integrations.md`, `docs/usage.md`, and `docs/fan-control.md` in the checkout as appropriate for the affected integration. Do not invoke services with real accounts for a test that can use fixtures.
 
@@ -102,9 +117,9 @@ The runner checks shell syntax, QML, lifecycle/update regressions, the shell int
 For monitor changes or monitor lifecycle changes, use the tests with an inert controller as appropriate:
 
 ```bash
-TMPDIR=/tmp python3 tests/test-display-integration.py
-TMPDIR=/tmp python3 tests/test-display-explicit-apply-pointer.py
-TMPDIR=/tmp python3 tests/test-display-pointer.py
+python3 tests/test-display-integration.py
+python3 tests/test-display-explicit-apply-pointer.py
+python3 tests/test-display-pointer.py
 ```
 
 Check each test's session requirements and simulated boundaries before running it. Do not change real monitors, DNS, VPN, Bluetooth pairing, or fan controls merely to test the interface. If the environment blocks a check, report that limitation without declaring it passed.
