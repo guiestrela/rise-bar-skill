@@ -1,4 +1,18 @@
-# Validation report — 0.1.3
+# Validation report — 0.1.4
+
+Date: 2026-11-13. Inspected Rise checkout: `39fe5f7140be7888db8780a30a779bbb94a46684`; scoped Elsewhen implementation: `50c7f56ee9a10b4d962c8694e2ffb64be8c19b92`.
+
+- The checkout broad suite completed with exit 0: **77 groups passed, no failed or skipped groups**. QML lint analyzed 254 files and reported **145 warnings**, not all classified or eliminated.
+- World Clock content: **95 passed, 0 failed, 0 skipped**. Native service locale/lifecycle/reopen fixtures passed. Composed adapter checks in that suite passed **15/0/0** for V1/V2 and both orientations.
+- The previous native display query-watchdog failure did not reproduce in five consecutive isolated runs or the final broad suite. No display/controller/fixture code was modified. This does not establish the historical failure's root cause or rule out timing flakiness.
+- Installed `ElsewhenService.qml`, `ElsewhenPanel.qml` and `ElsewhenPanelContent.qml` bytes matched the verified source. Plugin validation and shell ping succeeded; the active variant was V2 and ready. The real popup returned three clock rows, rendered its expanded globe and footer, and closed. Five scoped settings/state files retained their hashes.
+- The rest of the installed tree was not overwritten to match source. Unrelated OpenCode and test-file differences remain; group-write mode differences are not executable-bit changes. No broader reinstall or shell restart was needed for this verification.
+- Controlled original-versus-Rise captures establish concrete composition differences, not exact parity. Rise retains its frame, extra controls and compact globe; the original's list and expanded layout differ. Catalogs contain 74 versus 76 rows. Original search/reorder/keyboard/system-timezone mutation were not comprehensively validated; no real timezone change was performed.
+- The separate theme-check fix passed the existing regression suite and a delayed-remote/exact-pinned-apply fixture. An installed-helper scan reached all four theme remotes and found zero pending updates. No live theme update was installed.
+
+Package validation covers frontmatter, references, fenced Bash syntax, archive paths/CRC/source equality and checksums. No new cross-agent or marketplace behavior evaluation is claimed.
+
+# Historical validation — 0.1.3
 
 Date: 2026-11-12. Inspected and deployed Rise candidate:
 `323bbac76af12b190b18248aa5093d7422dfcc3c`.

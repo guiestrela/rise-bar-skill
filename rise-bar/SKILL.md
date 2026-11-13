@@ -1,7 +1,7 @@
 ---
 name: rise-bar
 description: Maintain Rise Bar on Omarchy with verified V1/V2 workflows.
-version: 0.1.3
+version: 0.1.4
 author: Guilherme Estrela (guiestrela), Hermes Agent
 license: MIT
 platforms: [linux]
@@ -78,6 +78,10 @@ Recent fixes exposed a few cross-layer boundaries worth checking when diagnosing
 - **Tray and layout dragging span shared and variant files.** Changes can involve `shared/components/TrayWidget.qml`, `shared/panels/TrayMenu.qml` or `TrayPanel.qml`, both `variants/V1/BarSlot.qml` and `variants/V2/BarSlot.qml`, and each variant's `Theme.qml`. While layout editing is unlocked, suppress hover tooltips and do not open the tray's full-screen backdrop at drag start; it can steal pointer events and cancel the drag. Validate locked/unlocked, hover, open-tray, drag-to-reorder and drag-to-tray states in both variants.
 - **Audio volume should use Omarchy's helper when available.** Preserve the `omarchy-audio-output-volume` path and the standalone fallback in `shared/logic/AudioWidgetLogic.js`; test command selection with a stub rather than changing live volume.
 - **Elsewhen locale and motion preferences are effective-state contracts.** Derive the 12/24-hour control label and toggle target from the effective locale-resolved value when the saved preference is unset; test that a real click persists the opposite value in both locale formats. `smoothMotion` reduces globe labels/graticule during motion; it must not zero zoom or hero animation durations. Test moving/non-moving detail and nonzero animation duration with the preference disabled.
+
+### Theme update checks
+
+When every theme appears offline, compare a hardened `git ls-remote` probe's actual elapsed time with the configured deadline before diagnosing connectivity. A reachable response just beyond the deadline can preserve an old degraded cache. Reproduce with a delayed remote in isolated Git repositories and verify the exact scanned commit can be applied. Preserve Git security flags, explicit timeout overrides and the bounded sweep budget; rerun the installed helper and inspect the resulting cache. Zero pending theme commits is not an installation failure. Honor TMPDIR in fixtures.
 
 ### Wallpaper ownership conflicts
 

@@ -169,8 +169,14 @@ Validate city search/add/remove/reorder, duplicate-zone identity, people and
 profile enrichment, 12/24-hour and temperature units, daylight scrubbing,
 keyboard focus/Escape, home selection, globe drag/tilt/zoom/jump, opening spin,
 greetings, arc-caption fallback, moon animation, persistence and reopening.
-Make system-timezone changes require explicit confirmation; test success and
-failure with an inert backend, never by changing the user's real clock.
+Keep system-timezone changes tied to a deliberate user action; never change
+clock settings merely to test the interface.
+
+Resolve unset format and units from the shell locale and preserve explicit saved values. Use the effective hour-format value for the label, highlight and toggle target; a true/false preference lookup alone breaks the first click in a 24-hour locale. Keep `smoothMotion` separate from animation enablement: it reduces labels/graticule while dragging or animating, then restores detail. Route timings and expanded stage dimensions through native Style tokens, and resize the containing surface with its canvas so it cannot cover controls.
+
+Keep confirmation text fully wrapping above an independently wrapping action row, with content-derived height. Check long IANA zones at 200/260/316 px in both adapters. Audit Set zone and cross-zone Here selection separately; do not describe every timezone path as confirmation-gated without verifying the actual dispatch chain. Simulate system changes and failures with an inert backend rather than changing the user's real clock.
+
+For original-versus-port captures, match time, locale, scale, width, colors, selected/home city and the complete catalog. A fake service with two city points cannot establish label-density parity against the original's full catalog. Separate actual omissions from unselected footer state, and record intentional Rise frame/controls/storage differences. Neither model equality nor a green adapter suite proves exact appearance.
 
 The Rise-owned IPC target is `quickshell-rise.elsewhen`; do not duplicate
 `omarchy.elsewhen`. Use `open` rather than `show`, which collides with the

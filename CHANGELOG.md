@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.4 — 2026-11-13
+
+- Documented effective locale-derived hour controls, explicit preference preservation and native motion semantics.
+- Added theme-check deadline diagnosis and slow-remote/pinned-apply regression guidance.
+- Recorded final checkout validation, repeated native display checks and installed World Clock rendering without claiming exact original parity or warning-free lint.
+- Rebuilt and verified the versioned archive and checksums. Historical agent/platform evaluation limits remain unchanged.
+
 ## 0.1.3 — 2026-11-12
 
 - Added World Clock/Elsewhen shared ownership, native-original comparison, interaction, IPC and translation/notification validation guidance.
