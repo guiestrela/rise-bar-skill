@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.6 — 2026-11-16
+
+- Corrected the support boundary: audited main 1.1.5 is horizontal-only; vertical implementation notes are historical/conditional, not current main instructions.
+- Kept approved popup/header/capture guidance applicable without reintroducing removed side-placement features.
+- Recorded the independent full-suite rerun separately from the failed long-socket run; retained limitations for live input, security and efficiency conclusions.
+- Rebuilt and verified the local skill archive and checksums. This documentation update does not modify or publish the bar.
+
 ## 0.1.5 — 2026-11-16
 
 - Recorded the approved Elsewhen header: active bar font, native typography and close control, with a 12px title-to-separator gap.

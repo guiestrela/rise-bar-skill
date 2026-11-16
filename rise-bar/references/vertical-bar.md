@@ -1,6 +1,6 @@
 # V1/V2: orientation, styles, and panels
 
-Use this reference when changing Rise's vertical presentation. Both V1 and V2 support Top/Bottom/Left/Right. Confirm the current values in the code.
+Use this reference for panel appearance and conditional orientation work. **Audited main 1.1.5 supports Top/Bottom only:** `barVertical` is fixed false, Left/Right are rejected and `VerticalBarContent.qml` is absent. The vertical rail/width procedures below describe a historical or different feature candidate whose enabling revision is not established here; do not use them as current main instructions. Check the actual revision and `tests/test-horizontal-only-bar.py` first. Approved popup/header/capture guidance remains applicable independently of vertical support.
 
 Paths beginning with `variants/V2/...` are relative to the repository root.
 Other module paths are relative to `variants/V2/`.

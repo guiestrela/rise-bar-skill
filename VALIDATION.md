@@ -1,4 +1,15 @@
-# Validation report — 0.1.5
+# Validation report — 0.1.6
+
+Date: 2026-11-16. Audited main/release 1.1.5: `77578c41990dde15f63d3b1075c9cabc66d85cae`, clean worktree.
+
+- The coordinator independently reran the unchanged full runner with a verified short scratch alias: 77 PASS groups, exit 0, `ALL PLUGIN CHECKS PASSED`. The worker's earlier fail-fast run and its isolated successful retry remain separate evidence; they were not retroactively relabeled as full success.
+- `tests/test-horizontal-only-bar.py` passes. Both Themes force `barVertical` false and reject side positions; the vertical rail sources are absent. Selected legacy vertical fixtures fail because their expected feature is absent or incompatible. Documentation now states this boundary instead of claiming current Top/Bottom/Left/Right support.
+- The worker's extra Node batch reported 160 pass, zero failures and zero skips. Its wider file matrix includes support assets and deferred drivers; it is not a claim that every available test or external integration was exercised.
+- Two operational/reliability hardening candidates and a short shared-host CPU/RSS sample were reported for review. No claim of completed security certification, confirmed Rise-only performance regression or applied runtime fixes is made by this documentation revision.
+
+Package validation covers frontmatter/version agreement, relative links, Bash fence syntax, archive safe paths/CRC/source equality and checksums. No new cross-agent or marketplace acceptance is claimed.
+
+# Historical validation — 0.1.5
 
 Date: 2026-11-16. Inspected Rise checkout: `c5a6a85ac7ec77e02e81260f353bf3cf88d3f8ba` plus local changes to the shared Elsewhen content, its V2 adapter and both composed/content fixtures. The new header and gap are not asserted to be part of that commit or a published Rise release.
 

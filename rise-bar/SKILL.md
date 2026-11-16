@@ -1,7 +1,7 @@
 ---
 name: rise-bar
 description: Maintain Rise Bar on Omarchy with verified V1/V2 workflows.
-version: 0.1.5
+version: 0.1.6
 author: Guilherme Estrela (guiestrela), Hermes Agent
 license: MIT
 platforms: [linux]
@@ -10,6 +10,8 @@ platforms: [linux]
 # Rise Bar
 
 Maintain Rise while preserving the selected variant, saved settings, and the user's plugins. Respond in the user's language.
+
+**Current scope:** audited main 1.1.5 is horizontal-only (Top/Bottom). Both Themes fix `barVertical` to false, reject side positions and omit `VerticalBarContent.qml`. Treat vertical-specific procedures as historical/conditional, not current support. Check the actual revision and `tests/test-horizontal-only-bar.py` before orientation work; do not restore removed features to satisfy legacy tests.
 
 ## Acceptance and delivery
 
