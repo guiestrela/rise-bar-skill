@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.5 — 2026-11-16
+
+- Recorded the approved Elsewhen header: active bar font, native typography and close control, with a 12px title-to-separator gap.
+- Added scope-freeze, connected panel surface and active-variant action-style guidance without redesigning approved city/globe content.
+- Added Wayland capture/backend diagnosis, current-image comparison, settled IPC and cached-component replacement gates.
+- Documented real-pointer fixture versus live-input limits and short scratch-path recovery for IPC socket failures.
+- Updated validation scope, the versioned archive and checksums. No new cross-agent or marketplace acceptance is claimed.
+
 ## 0.1.4 — 2026-11-13
 
 - Documented effective locale-derived hour controls, explicit preference preservation and native motion semantics.

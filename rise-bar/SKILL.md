@@ -1,7 +1,7 @@
 ---
 name: rise-bar
 description: Maintain Rise Bar on Omarchy with verified V1/V2 workflows.
-version: 0.1.4
+version: 0.1.5
 author: Guilherme Estrela (guiestrela), Hermes Agent
 license: MIT
 platforms: [linux]
@@ -18,6 +18,9 @@ Maintain Rise while preserving the selected variant, saved settings, and the use
 - After a rejected update, develop on a separate branch from the restored base. Do not reapply the rejected update wholesale. Review the candidate, preserve preferences and back up outside the watched tree before installation.
 - Check the selected variant immediately before and after deployment. A ready IPC result alone does not prove a cached component was replaced; inspect fresh logs and the actual rendered panel.
 - Validate active glyphs and composed surfaces, not merely centered containers. Distinguish logic fixtures, native loading, rendered captures, and live interaction in reports.
+- Freeze approved central content when the remaining request is panel styling. Preserve cities, globe, control positions and functions; change only the named header, frame or buttons. Stop older original-parity work when the user narrows the scope.
+- Trace the actual reference panel renderer and theme contract, not a similar tooltip. Keep V2 popup fill on `root.bg`, independent of frosted `barBg`; preserve the connected contour and active-variant action styling. Follow the header and capture recipe in [references/vertical-bar.md](references/vertical-bar.md).
+- Close one tested candidate instead of cycling through recoloring, copying and restarts. A dispatch acknowledgement or unchanged installed hash is not a rendered acceptance check; preserve settings and retain the exact unresolved limitation when a live interaction is not confirmed.
 - Keep code and technical documentation in the project; keep execution reports in the user's requested notes location. Never claim all future defects are excluded by a green suite.
 
 If delivered through MCP (for example, Agensi), read linked references from the provider's text resources; relative links name bundled resources and do not imply local files. Request the missing reference through that provider before following a procedure that depends on it.
@@ -63,7 +66,7 @@ For V1/V2 vertical geometry, widget surfaces, or side panels, and V2 shell style
 
 For adding or replacing a widget, adapting an external plugin, or styling OneDrive, read [references/widget-integration.md](references/widget-integration.md). It covers shared ownership, expanded slots and saved-order migration, native text and theme bindings, OneDrive preferences/timeouts, and validation without incidental account actions.
 
-For World Clock/Elsewhen, also follow that reference's World Clock section: compare the installed Omarchy original, preserve the shared coordinator, and cover city/globe/keyboard/IPC behavior and native translation imports before deployment.
+For World Clock/Elsewhen, also follow that reference's World Clock section: compare the installed Omarchy original when parity is requested, preserve the shared coordinator and any user-approved composition, and cover city/globe/keyboard/IPC behavior and native translation imports before deployment.
 
 Consult `docs/integrations.md`, `docs/usage.md`, and `docs/fan-control.md` in the checkout as appropriate for the affected integration. Do not invoke services with real accounts for a test that can use fixtures.
 
@@ -117,7 +120,7 @@ Run the relevant tests from the checkout. For a broad review:
 bash tests/run-plugin-checks.sh
 ```
 
-The runner checks shell syntax, QML, lifecycle/update regressions, the shell integration contract, and JavaScript tests. ShellCheck is optional; report its absence. This command does not replace Wayland interaction tests. Do not edit the runner while it is executing; Bash may read new content at old offsets. Finish edits before final validation.
+The runner checks shell syntax, QML, lifecycle/update regressions, the shell integration contract, and JavaScript tests. ShellCheck is optional; report its absence. If a native fixture cannot create its IPC socket below a long profile scratch directory, verify the Unix socket path length before changing production code. A verified short symlink under `XDG_RUNTIME_DIR` to that same scratch directory can provide `TMPDIR` for the unchanged suite; preserve the first failure and successful rerun logs. This command does not replace Wayland interaction tests. Do not edit the runner while it is executing; Bash may read new content at old offsets. Finish edits before final validation.
 
 For monitor changes or monitor lifecycle changes, use the tests with an inert controller as appropriate:
 

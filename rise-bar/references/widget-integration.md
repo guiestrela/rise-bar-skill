@@ -154,10 +154,12 @@ the shell reloads UI code; it does not itself repair the OneDrive connection.
 
 ## World Clock / Elsewhen
 
-Compare against the actual original under the installed Omarchy shell's
+When original parity is requested, compare against the actual original under the installed Omarchy shell's
 `plugins/panels/elsewhen/`, not an obsolete Downloads copy. Read its manifest,
 Panel, HeroTitle, Globe, GlobeFooter and CityRow, and preserve attribution for
 ported components and data.
+
+If the user approves the current central content and requests only Rise styling, preserve that composition and stop the older parity work. For the separate `Elsewhen` heading, native font/close control, 12px separator gap and connected-surface acceptance, follow [vertical-bar.md](vertical-bar.md). Keep outer-header styling separate from the existing `World Clock` hero and city/globe behavior.
 
 Keep state and asynchronous work in `shared/services/ElsewhenService.qml` and
 `ElsewhenProcessAdapter.qml`; presentation lives in the shared Elsewhen panel

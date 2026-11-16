@@ -34,6 +34,34 @@ G16/G18 in V2. Do not transfer orders or preferences between these IDs.
 
 ## Visual and interaction contracts
 
+### Restyle an approved popup
+
+1. Freeze the approved middle: city list, globe, catalog, controls, positions and behavior. Treat the outer frame, header and named action buttons as separate targets. Do not resume an older redesign or original-parity goal after the user approves the current composition.
+2. Read the actual reference adapters, such as `variants/V2/panels/WallpaperManagerQuickPanel.qml` and `NordVPNPanel.qml`. Reuse their `ConnectedPanelSurface`, shadow, owner-active binding, anchor, reveal and `SidePanelPositioner` contract. A tooltip with similar colors is not the reference panel renderer.
+3. Keep V2's popup fill on `root.bg`; `barBg` can carry frost/opacity intended for the bar. Do not alter the compositor, global theme or approved content to mask a local surface mismatch. Respect V1's separate surface contract.
+4. Derive named action controls' idle/hover/focus fills, text, border, font and radius from the active variant. Preserve `Add a city` and `Jump to a city` positions and functions. A selected tab in an example does not authorize a permanently accented action button.
+5. Add a geometry or real-pointer regression before changing production code, verify RED, then apply the smallest patch and verify GREEN. Wait for QML layout readiness before subsequent pointer events; do not replace a click with a direct handler call merely to pass the fixture.
+
+### Elsewhen header contract
+
+For the approved Rise header, follow the implementation in `shared/panels/WallpaperManagerQuickPanel.qml`, not the original Elsewhen hero typography. Confirm these values against the current reference before reusing them:
+
+- Keep a separate literal `Elsewhen` heading above the separator; retain the home caption and `World Clock`/globe composition below it.
+- Use shared `UiText`, `root.mono`, `root.ink`, 13px type, `Font.Medium`, letter spacing 2, a 24px heading row and elision before the close control. Do not substitute the content's Commons font or hardcode a machine's font name.
+- Place `✕` at the right: `root.mono`, 12px, `root.muted` at rest and `root.seal` on hover, with a 120ms color transition and an 8px expanded hit area. Close the existing panel through its visibility/close path; do not terminate the shell. Preserve accessible naming and keyboard activation.
+- Leave **12px between the title row and separator**, without moving the close icon out of vertical alignment. Account for positioner spacing: with a 2px Column spacing, an 8px spacer contributes a total gap of 2 + 8 + 2 = 12px. Do not increase spacing across the approved central content.
+- Assert font family, size, weight, letter spacing, color, row/divider order and gap. Exercise real hover/click on the production close control in V1/V2 fixtures, plus bounds and existing city/globe interactions. Distinguish these fixtures from a physical installed-session click test.
+
+### Capture and installed-component acceptance
+
+1. Discover the actual integrated-shell PID. Through `terminal`, query `quickshell ipc --pid "$pid" call quickshell-rise.variant current`, `state`, `error`, and `quickshell-rise.lifecycle ready`. Wait for the settled active/ready state before interpreting an empty or fallback variant during reload.
+2. Distinguish backend failure from absent UI. An X11 window enumerator may return zero windows for Wayland layer-shell panels. If Hermes computer use is available, run its doctor yourself. When authorized, use an available session-native capture route such as `grim`; never switch routes to evade an explicit approval denial.
+3. Open through the existing `quickshell-rise.elsewhen open` IPC or the reference panel's existing UI. Do not assume Wallpaper Manager has an IPC opener or confuse its manager with the wallpaper picker. Batch open, settled reveal, capture and close to avoid focus changes invalidating the image. Do not select wallpapers, change VPN state or mutate preferences just to compare panels.
+4. Match output, scale, backdrop and reveal state. Popup anchors can differ, so align the actual sampled coordinates. Moving a pointer between outputs can invalidate ownership or hit coordinates; save and restore pointer position for authorized foreground input. Stop coordinate retries if the popup disappears, rather than clicking through to another application. A successful dispatch alone does not establish an input effect.
+5. Compare static, constant-fill samples away from content and edges. Label alpha fits as estimates; reject degenerate backgrounds, out-of-range results or large residuals. Old images do not establish current runtime state, and a fill estimate does not identify the responsible QML/compositor layer. Do not claim whole-panel pixel-perfect identity from a few matching samples.
+6. Verify component replacement, not only installed bytes or `ready=true`. If an authorized automatic reload still renders old QML, preserve the evidence and use one supported `omarchy restart shell` when within scope. Discover the new PID afterward; do not reuse the old one, clear preferences or repeatedly rewrite unchanged files.
+7. Compare scoped preference hashes and enabled plugins, installed source bytes, fresh logs and the actual requested header/contour. Remove temporary diagnostics. Report live render, pointer fixtures and unconfirmed live actions separately; a visible close icon does not establish a successful physical click.
+
 In V2, `verticalBarWidth` is 36 px for Full/Dock/Notch and 40 px for Fit.
 Fit keeps an outer gap of 2 px on each side; content uses side margins of
 1 px, preserving 34 px internally across all styles. When changing the width,

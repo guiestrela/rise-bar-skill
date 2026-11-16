@@ -1,4 +1,18 @@
-# Validation report — 0.1.4
+# Validation report — 0.1.5
+
+Date: 2026-11-16. Inspected Rise checkout: `c5a6a85ac7ec77e02e81260f353bf3cf88d3f8ba` plus local changes to the shared Elsewhen content, its V2 adapter and both composed/content fixtures. The new header and gap are not asserted to be part of that commit or a published Rise release.
+
+- The full checkout runner passed **77 check groups**, with QML lint covering **254 files and 157 warnings**, before the final gap-only adjustment. No zero-warning or post-gap full-suite claim is made.
+- Header typography/close changes passed **38 adapter checks and 97 content checks**, with no failures or skips. The gap regression then failed before its fix and passed afterward in **38 adapter checks**. Both variants' production close controls were exercised with real pointer events in the composed fixture.
+- Installed production content matched the reviewed source. The active V2 settled active/ready with an empty variant error. Native Wayland captures showed the literal Elsewhen title, reference typography and close icon, then the final 12px separator gap.
+- The existing X11 desktop backend enumerated no relevant Wayland windows; native capture worked. This was not evidence that the shell or panels were absent. The live coordinate attempt did not confirm a physical close click; fixture success is not substituted for it.
+- Current World Clock and Wallpaper Manager captures had equal RGB values at six matching static-background fill samples. This supports the sampled fill agreement, not whole-panel pixel-perfect identity or proof of a compositor cause for old alpha estimates.
+- Scoped preference hashes for the active variant, both widget caches and Elsewhen preferences remained unchanged. Enabled plugin lists were also unchanged across the native-header deployment. Authorized supported shell restarts replaced cached QML; the graphical session, compositor settings, cities and OS timezone were not changed for validation.
+- An initial full-run failure came from an IPC socket below the long profile scratch path. The unchanged runner passed through a verified short symlink to that same scratch directory. The original failure and successful rerun were retained; no production test was weakened.
+
+Package checks for this revision cover frontmatter/version consistency, relative Markdown links, fenced Bash syntax, safe archive members, CRC, source-byte equality and SHA-256. These are local packaging checks, not new skill behavior evaluations in another agent or marketplace. Historical platform limitations below remain applicable.
+
+# Historical validation — 0.1.4
 
 Date: 2026-11-13. Inspected Rise checkout: `39fe5f7140be7888db8780a30a779bbb94a46684`; scoped Elsewhen implementation: `50c7f56ee9a10b4d962c8694e2ffb64be8c19b92`.
 

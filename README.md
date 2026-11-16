@@ -36,7 +36,7 @@ Verified agent behavior: Copilot CLI **1.0.105** discovered, activated, and read
 
 ## Distribution status
 
-Skill version: **0.1.4**. Current inspected Rise checkout: `39fe5f7140be7888db8780a30a779bbb94a46684` (2026-11-13), including Elsewhen change `50c7f56ee9a10b4d962c8694e2ffb64be8c19b92`. The checkout suite passed 77 groups without skips; its three World Clock runtime files matched the installation, and the real V2 globe opened, rendered and closed with scoped preferences unchanged. This is not a claim that the entire installed tree equals the checkout: unrelated OpenCode and test-file differences remain. QML lint reported 145 warnings; original visual/behavioral parity is not complete. See [CHANGELOG.md](CHANGELOG.md), [installation guidance](rise-bar/references/installation.md), and [VALIDATION.md](VALIDATION.md) for exact scope and historical results.
+Skill version: **0.1.5**. Current inspected Rise checkout: `c5a6a85ac7ec77e02e81260f353bf3cf88d3f8ba` plus local visual/header/test changes (2026-11-16), not that commit alone or a newly published application release. The updated guidance preserves the approved city/globe composition and documents the native Elsewhen heading, close control and 12px separator gap. The last full suite passed 77 groups before the final gap-only edit (254 QML files, 157 warnings); the focused adapter suite passed 38 checks after that edit. Live V2 captures confirm the header and larger gap, with four scoped preference hashes unchanged. Close behavior passed real-pointer fixtures in both variants; a successful physical close click was not established by live automation. See [CHANGELOG.md](CHANGELOG.md), [installation guidance](rise-bar/references/installation.md), and [VALIDATION.md](VALIDATION.md) for exact scope and historical results.
 
 This skill package is licensed under the [MIT License](LICENSE), copyright © 2026 Guilherme Estrela. The separate Rise application has its own licensing terms.
 
@@ -118,4 +118,4 @@ See [SKILL.md](rise-bar/SKILL.md) for the complete workflow.
 
 ## Download package
 
-The distributable is `dist/rise-bar-skill-0.1.4.zip`, with its checksum in `dist/SHA256SUMS`. It includes the full skill, references, MIT license, README, version, changelog, and [validation report](VALIDATION.md). Extract it before following local installation instructions. Platform acceptance must still be checked on Agensi; producing this archive does not publish it.
+The distributable is `dist/rise-bar-skill-0.1.5.zip`, with its checksum in `dist/SHA256SUMS`. It includes the full skill, references, MIT license, README, version, changelog, and [validation report](VALIDATION.md). Extract it before following local installation instructions. Platform acceptance must still be checked on Agensi; producing this archive does not publish it.
