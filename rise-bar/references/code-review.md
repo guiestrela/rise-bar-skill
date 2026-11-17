@@ -2,6 +2,29 @@
 
 ## Diagnose before modifying
 
+### Bounded comprehensive audit
+
+1. Freeze the candidate revision/tree and record installation, variant, preference hashes and enabled plugins. Compare content, symlink targets, executable bits and other permission bits separately; removing group write does not change runtime content or executable state.
+2. Inventory executable drivers, test-case sources, fixtures and helpers. Map direct runner checks, wildcard/nested coverage, selected extras, incompatible legacy tests, manual/account boundaries and unexecuted items. A file inventory is not a count of executed tests; never mark the runner itself unexecuted after a verified run.
+3. Run safe fixtures with private HOME/XDG/runtime/TMPDIR and inert commands; also isolate notifications and other secondary effects. Inspect drivers that force Wayland or write repository files before executing them. Preserve failures and reclassifications instead of turning an unsupported test into a pass.
+4. Bind each log and result to its actual candidate. A long-socket failure, a focused retry, a full retry and a later color/hardening commit are separate evidence. If one full run aborts, an isolated successful retry does not approve unreached checks.
+5. Review security with redacted output and concrete trust boundaries. A direct local command requiring sudo is not automatically a remote or authentication-bypass issue. Report operational intent, quoting, privilege, path and external-input risks separately; a token-pattern scan alone is not a security audit.
+6. End with a finite matrix and prioritized findings: file/line, evidence versus hypothesis, impact, minimal proposal and a RED/GREEN test. Stop at the correction/deployment gate; do not cycle indefinitely through more inventory before materializing the current result.
+
+### Cache and privileged-helper regressions
+
+- Extract and execute the production cache command arrays against private scratch paths, not a duplicated writer. Check apostrophes, spaces, backslashes, Unicode and shell syntax in path and payload; assert sentinel non-execution and exact bytes/newlines. Prefer separate argv over quote concatenation. Keep parent creation only where the existing writer contract requires it.
+- Require explicit plain-Arch transaction intent before sudo and exercise missing intent, declined confirmation and successful explicit invocation with fake backends. Preserve Omarchy's native delegation. When an early guard is added, make downstream negative fixtures pass it and assert their exact failure diagnostic; otherwise a test can falsely pass at the wrong guard.
+- Repair stale layout fixtures against the approved registry/defaults, including G23/G24 where present. Supply the extracted production function's complete scope and assert tray clearing; do not change production layout to satisfy an obsolete snapshot. Include the corrected regression in the broad runner to prevent future drift.
+- Honor TMPDIR and canonicalize private fixture paths if production uses `readlink -f`. Check unset-TMPDIR behavior without writing outside the permitted scratch area. Keep staged/source hashes unchanged during final tests and repeat review for substantive later edits.
+
+### Lint triage and efficiency evidence
+
+- Count occurrences, unique `(file,line,column)` locations, local diagnostic tuples and global rule/message signatures independently. Separate production from tests/stubs before ranking risk; none of these counts is a bug count.
+- Check actual qmldir, external import roots, installed qmltypes and runtime loading before calling import/singleton/PanelWindow warnings harmless. Loader.item may be statically QObject while the loaded component is an Item; inspect actual call sites and do not invent a runtime reproduction.
+- Inspect polling gates and lifecycle before changing intervals. The wake-state bridge also protects animated/video wallpaper during lock/screensaver; gating solely on shuffle-on-wake can remove that protection. Hidden AI-cache readers are not authenticated collectors, and startup probes are not continuous polling.
+- Measure a bounded relevant helper/process path and record PID stability, elapsed time, child CPU, sample count and concurrent-session limits. Do not attribute a shared shell's CPU/RSS to Rise alone, interpret reload as a leak, or present a per-call extrapolation as measured steady-state usage. Preserve lock-state latency and cache freshness before proposing a smaller workload.
+
 Count warnings in the current checkout without reusing totals from an earlier session. Use the same `qmllint` version, imports, and options before and after. Record files analyzed, warnings, categories, and failures; a zero exit status does not mean there are no warnings.
 
 The project runner counts console lines beginning with `Warning:`. The JSON report may also include diagnostics that the console does not show. Use JSON to locate suggestions, but do not mix the two metrics when reporting a reduction. Do not reduce coverage or disable categories to obtain a lower count.

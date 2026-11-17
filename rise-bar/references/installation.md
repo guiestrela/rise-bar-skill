@@ -36,6 +36,18 @@ omarchy-shell shell ping
 
 Compare the enabled plugin list and fresh logs with the pre-install state. Desktop interaction remains a separate check.
 
+## Finish an authorized local-fix release
+
+Keep application publication separate from skill packaging and local installation. Through `terminal`, inspect the existing version-triggered workflow, publish only the reviewed candidate, and read back the exact PR state, remote main, tag, release and workflow conclusion. Do not claim remote checks passed when the feature branch has no reported checks.
+
+Before updating the installed plugin, compare every dirty tracked path to the incoming revision. Refuse unexplained edits. Back up the complete tree including Git metadata and the dirty diff outside the watched directory; snapshot the current variant, both widget/order caches, integration preferences and shell/plugin configuration without printing private values.
+
+If reviewed local patches are already integrated upstream and an old fixture is explicitly identified as superseded, preserve them in a named stash after the full backup. Keep that stash unapplied rather than replaying obsolete patches over the release. Never drop it, force-reset unrelated work or ignore conflicts just to obtain a clean tree. Another valid route is temporary autostash only when every dirty file is already identical to the incoming revision and the inspected native updater supports that route safely.
+
+Use the manager's actual supported update command/options, targeting only Rise. Validate the plugin, establish fresh loading with at most the necessary authorized shell restart, rediscover the PID and check settled variant/state/error/ready. A manager-owned detached checkout is not itself a mismatch when HEAD equals the release.
+
+Compare the source and installation's tracked paths by bytes, symlink targets and executable bits, verify clean worktrees, and rerun the broad suite from the installation after a broad release update. Recheck preference hashes and enabled plugins after all tests and live render checks. Retain the first failure and recovery evidence; report untested real-account/manual operations and remaining lint warnings rather than promising universal safety.
+
 ## Optional AI usage collectors
 
 The inspected installer requires Python 3 and a working user systemd manager. It installs all four collectors into `~/.local/bin/` and service/timer units into `~/.config/systemd/user/`, then enables their timers (approximately every five minutes). It also disables and removes legacy `claude-usage-cookie` and `claude-usage-calc` units and binaries. Back up any existing files that it would replace before running it.

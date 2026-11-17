@@ -7,7 +7,7 @@ This repository contains the skill and its supporting references. The Rise Bar a
 ## What the skill does
 
 - Guides installation and updates through the Omarchy plugin manager, including fonts, CAVA, AI usage collectors, and the recovery hook.
-- Helps configure and maintain both V1 and V2 bar variants, widgets, panels, and integrations. Audited main 1.1.5 supports horizontal Top/Bottom placement; vertical-specific references are historical/conditional, not support claims.
+- Helps configure and maintain both V1 and V2 bar variants, widgets, panels, and integrations. Verified main/release 1.1.6 supports horizontal Top/Bottom placement; vertical-specific references are historical/conditional, not support claims.
 - Explains the shared QML architecture so changes preserve variant behavior and avoid duplicated implementations.
 - Guides crash and hang diagnosis using process logs, journals, core dumps, and isolated probes.
 - Supports code reviews, QML warning fixes, and relevant regression checks.
@@ -16,7 +16,7 @@ This repository contains the skill and its supporting references. The Rise Bar a
 
 ## Hyprland and Omarchy support
 
-The skill targets Rise running as a plugin inside Omarchy’s existing `omarchy-shell` process on Hyprland. It includes guidance for monitor handling, supported bar placement, panel styling and session-aware validation. Do not infer vertical support from historical geometry notes: main 1.1.5 is horizontal-only.
+The skill targets Rise running as a plugin inside Omarchy’s existing `omarchy-shell` process on Hyprland. It includes guidance for monitor handling, supported bar placement, panel styling and session-aware validation. Do not infer vertical support from historical geometry notes: main 1.1.6 is horizontal-only.
 
 The current installation workflow requires Omarchy’s Quickshell plugin system. A standalone Hyprland installation without Omarchy needs its own integration work; this skill does not provide a standalone installer.
 
@@ -36,7 +36,7 @@ Verified agent behavior: Copilot CLI **1.0.105** discovered, activated, and read
 
 ## Distribution status
 
-Skill version: **0.1.6**. Audited Rise main/release 1.1.5: `77578c41990dde15f63d3b1075c9cabc66d85cae` (2026-11-16). The full runner passed 77 groups in an independent short-scratch-path rerun; its earlier long-socket failure remains recorded separately. Main is horizontal-only: legacy vertical tests and notes do not establish supported side placement. The approved Elsewhen heading, close styling and 12px separator gap remain unchanged. Physical live close-click acceptance and complete integration/security/performance certification are not claimed. See [CHANGELOG.md](CHANGELOG.md), [installation guidance](rise-bar/references/installation.md), and [VALIDATION.md](VALIDATION.md) for exact scope and historical results.
+Skill version: **0.1.7**. Verified Rise main/release and installed checkout 1.1.6: `59e9cd5352b1e4ec42b0383e62107088b7ebd0af` (2026-11-16). Source and installation each passed 79 check groups; all 729 tracked paths matched by content/link target/executable bits, both worktrees were clean, and seven scoped preference hashes remained unchanged. The release includes explicit plain-Arch update intent, argv-safe V1/V2 cache persistence and corrected layout regressions. QML lint still reports 157 occurrences; triage separates 106 in tests/stubs from 51 in production rather than claiming 157 runtime defects. Real-account/manual operations and Rise-only performance certification remain outside the evidence. See [CHANGELOG.md](CHANGELOG.md), [installation guidance](rise-bar/references/installation.md), and [VALIDATION.md](VALIDATION.md) for exact scope and historical results.
 
 This skill package is licensed under the [MIT License](LICENSE), copyright © 2026 Guilherme Estrela. The separate Rise application has its own licensing terms.
 
@@ -118,4 +118,4 @@ See [SKILL.md](rise-bar/SKILL.md) for the complete workflow.
 
 ## Download package
 
-The distributable is `dist/rise-bar-skill-0.1.6.zip`, with its checksum in `dist/SHA256SUMS`. It includes the full skill, references, MIT license, README, version, changelog, and [validation report](VALIDATION.md). Extract it before following local installation instructions. Platform acceptance must still be checked on Agensi; producing this archive does not publish it.
+The distributable is `dist/rise-bar-skill-0.1.7.zip`, with its checksum in `dist/SHA256SUMS`. It includes the full skill, references, MIT license, README, version, changelog, and [validation report](VALIDATION.md). Extract it before following local installation instructions. Platform acceptance must still be checked on Agensi; producing this archive does not publish it.

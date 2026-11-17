@@ -1,6 +1,6 @@
 # V1/V2: orientation, styles, and panels
 
-Use this reference for panel appearance and conditional orientation work. **Audited main 1.1.5 supports Top/Bottom only:** `barVertical` is fixed false, Left/Right are rejected and `VerticalBarContent.qml` is absent. The vertical rail/width procedures below describe a historical or different feature candidate whose enabling revision is not established here; do not use them as current main instructions. Check the actual revision and `tests/test-horizontal-only-bar.py` first. Approved popup/header/capture guidance remains applicable independently of vertical support.
+Use this reference for panel appearance and conditional orientation work. **Verified main/release 1.1.6 supports Top/Bottom only:** `barVertical` is fixed false, Left/Right are rejected and `VerticalBarContent.qml` is absent. The vertical rail/width procedures below describe a historical or different feature candidate whose enabling revision is not established here; do not use them as current main instructions. Check the actual revision and `tests/test-horizontal-only-bar.py` first. Approved popup/header/capture guidance remains applicable independently of vertical support.
 
 Paths beginning with `variants/V2/...` are relative to the repository root.
 Other module paths are relative to `variants/V2/`.
@@ -41,6 +41,12 @@ G16/G18 in V2. Do not transfer orders or preferences between these IDs.
 3. Keep V2's popup fill on `root.bg`; `barBg` can carry frost/opacity intended for the bar. Do not alter the compositor, global theme or approved content to mask a local surface mismatch. Respect V1's separate surface contract.
 4. Derive named action controls' idle/hover/focus fills, text, border, font and radius from the active variant. Preserve `Add a city` and `Jump to a city` positions and functions. A selected tab in an example does not authorize a permanently accented action button.
 5. Add a geometry or real-pointer regression before changing production code, verify RED, then apply the smallest patch and verify GREEN. Wait for QML layout readiness before subsequent pointer events; do not replace a click with a direct handler call merely to pass the fixture.
+
+### Active-variant content colors
+
+Check both live IPC and saved variant before interpreting a screenshot's variant name. A V2 reference can be shown while V1 is actually active. Clarify only if that changes whether to preserve or switch the selected variant.
+
+For the approved Rise Elsewhen palette, both adapters pass their active root's foreground/background, muted, accent, seal, separator and idle/hover fills through `contentPaletteOverride`. Do not let V1 silently fall back to Commons while V2 uses Rise, or hardcode the example's green/accent. Preserve variant-specific frame geometry and approved fonts/layout. Test real city-row foregrounds and reactive ink/seal changes in both adapters, not only the new header.
 
 ### Elsewhen header contract
 

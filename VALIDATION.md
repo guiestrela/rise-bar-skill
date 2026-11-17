@@ -1,4 +1,19 @@
-# Validation report — 0.1.6
+# Validation report — 0.1.7
+
+Skill-package validation date: 2026-11-17. Application evidence recorded on 2026-11-16: verified Rise 1.1.6 release/main/installed checkout `59e9cd5352b1e4ec42b0383e62107088b7ebd0af`. Application PR #4 was read back as merged; its version-triggered release workflow completed successfully, and remote main/tag/release matched. This skill revision documents that implementation; it is not an additional bar update, a new application-suite run or a new independent cross-agent evaluation.
+
+- The final release candidate and actual updated installation each passed **79 check groups**, exit 0, `ALL PLUGIN CHECKS PASSED`. The implementation received an independent review with no concrete security or logic blockers.
+- All **729 tracked paths** matched source versus installation by bytes, symlink targets and executable bits. Source main and installed worktree were clean at the release commit. Other permission bits were not claimed identical.
+- Manager-driven update preserved the prior installed tree and dirty patch in a complete backup plus retained named stash. The superseded old fixture was identified against its earlier approved checkpoint; old patches were not replayed over the release.
+- Seven scoped preference/configuration hashes and the plugin-list output were unchanged after update, restart, installed tests and live render check. V2 remained active/ready with empty variant error. World Clock opened, rendered and closed through its existing IPC.
+- Production cache builders were exercised with scratch-only paths/payloads, and the Arch apply flow used fake sudo/pacman/confirmation backends. No real system upgrade, account, VPN, monitor or timezone mutation was performed for validation.
+- The recorded hardening-candidate lint (`05212fc0f5f0870082c4e1698640cd82bd30a331`), not a new lint run for this skill update, analyzed 254 QML files and produced **157 warning occurrences**, **153 source locations**, **155 location/rule/diagnostic tuples** and **16 normalized global signatures**. Scope: **106 occurrences in tests/stubs, 51 in production**. Three singleton diagnostics contradicted adjacent qmldir declarations; other import/type/scope warnings were not represented as reproduced runtime failures or universally harmless.
+- Seven vertical drivers were classified against horizontal-only main; no removed feature was restored or assertion deleted to change the result. The broader audit matrix includes file/fixture inventories and manual/account exclusions, not a claim that every available test executed successfully.
+- Three bounded installed wake-helper queries averaged about 40ms child CPU per call with stable host PID. A 1Hz projection is about 4% of one core, not a steady-state or whole-Rise measurement. Polling/animation cadence was not changed; no speculative efficiency gain is claimed.
+
+Package validation for 0.1.7 covers YAML/version consistency, relative links, Bash fence syntax, safe ZIP members/CRC/source equality and all distribution checksums. Historical external-agent and marketplace limitations remain below.
+
+# Historical validation — 0.1.6
 
 Date: 2026-11-16. Audited main/release 1.1.5: `77578c41990dde15f63d3b1075c9cabc66d85cae`, clean worktree.
 

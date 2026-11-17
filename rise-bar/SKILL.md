@@ -1,7 +1,7 @@
 ---
 name: rise-bar
 description: Maintain Rise Bar on Omarchy with verified V1/V2 workflows.
-version: 0.1.6
+version: 0.1.7
 author: Guilherme Estrela (guiestrela), Hermes Agent
 license: MIT
 platforms: [linux]
@@ -11,7 +11,7 @@ platforms: [linux]
 
 Maintain Rise while preserving the selected variant, saved settings, and the user's plugins. Respond in the user's language.
 
-**Current scope:** audited main 1.1.5 is horizontal-only (Top/Bottom). Both Themes fix `barVertical` to false, reject side positions and omit `VerticalBarContent.qml`. Treat vertical-specific procedures as historical/conditional, not current support. Check the actual revision and `tests/test-horizontal-only-bar.py` before orientation work; do not restore removed features to satisfy legacy tests.
+**Current scope:** verified main/release 1.1.6 is horizontal-only (Top/Bottom). Both Themes fix `barVertical` to false, reject side positions and omit `VerticalBarContent.qml`. Treat vertical-specific procedures as historical/conditional, not current support. Check the actual revision and `tests/test-horizontal-only-bar.py` before orientation work; do not restore removed features to satisfy legacy tests.
 
 ## Acceptance and delivery
 
@@ -24,6 +24,8 @@ Maintain Rise while preserving the selected variant, saved settings, and the use
 - Trace the actual reference panel renderer and theme contract, not a similar tooltip. Keep V2 popup fill on `root.bg`, independent of frosted `barBg`; preserve the connected contour and active-variant action styling. Follow the header and capture recipe in [references/vertical-bar.md](references/vertical-bar.md).
 - Close one tested candidate instead of cycling through recoloring, copying and restarts. A dispatch acknowledgement or unchanged installed hash is not a rendered acceptance check; preserve settings and retain the exact unresolved limitation when a live interaction is not confirmed.
 - Keep code and technical documentation in the project; keep execution reports in the user's requested notes location. Never claim all future defects are excluded by a green suite.
+- For supervised audits, require skill-source acknowledgement, a file/driver coverage matrix, commands, candidate hashes and logs. Let the worker investigate with inert/read-only boundaries while the coordinator reviews evidence and owns installation, restarts, privileges and publication. A queued handoff is not an acknowledged gate. Approval timeout stops that operation and equivalent execution paths until renewed authorization, not independent permitted reads.
+- Keep source commits, remote main/tag/release and installed runtime distinct. A published release does not update the installation; a scoped installed patch does not synchronize its Git history or manifest. Verify each requested target explicitly and retain the live user's variant and preferences.
 
 If delivered through MCP (for example, Agensi), read linked references from the provider's text resources; relative links name bundled resources and do not imply local files. Request the missing reference through that provider before following a procedure that depends on it.
 
@@ -82,6 +84,8 @@ Recent fixes exposed a few cross-layer boundaries worth checking when diagnosing
 - **MPRIS selection is shared by the bar widget and media panel.** Inspect `shared/services/MprisSelect.qml` when player choice or controls fail. Ignore stale `playerctld` proxy entries, check player capabilities before invoking controls, and validate with multiple players and playback-stream state.
 - **Tray and layout dragging span shared and variant files.** Changes can involve `shared/components/TrayWidget.qml`, `shared/panels/TrayMenu.qml` or `TrayPanel.qml`, both `variants/V1/BarSlot.qml` and `variants/V2/BarSlot.qml`, and each variant's `Theme.qml`. While layout editing is unlocked, suppress hover tooltips and do not open the tray's full-screen backdrop at drag start; it can steal pointer events and cancel the drag. Validate locked/unlocked, hover, open-tray, drag-to-reorder and drag-to-tray states in both variants.
 - **Audio volume should use Omarchy's helper when available.** Preserve the `omarchy-audio-output-volume` path and the standalone fallback in `shared/logic/AudioWidgetLogic.js`; test command selection with a stub rather than changing live volume.
+- **Cache writes must keep data out of shell source.** Pass paths and serialized content as separate argv to a fixed script or reviewed native writer. Exercise actual V1/V2 command builders with apostrophes, metacharacters and scratch-only sentinels; preserve widget trailing-newline versus order no-newline formats.
+- **Plain-Arch apply requires intent before authentication.** Preserve explicit `--run` and affirmative confirmation before sudo, without changing read-only backend probing or Omarchy's delegated updater. Use fake sudo/pacman/confirmation fixtures and assert the specific rejection path, not merely any nonzero result.
 - **Elsewhen locale and motion preferences are effective-state contracts.** Derive the 12/24-hour control label and toggle target from the effective locale-resolved value when the saved preference is unset; test that a real click persists the opposite value in both locale formats. `smoothMotion` reduces globe labels/graticule during motion; it must not zero zoom or hero animation durations. Test moving/non-moving detail and nonzero animation duration with the preference disabled.
 
 ### Theme update checks
@@ -109,6 +113,8 @@ Use isolated probes with simulated helpers. `offscreen` works for components wit
 In QML, look especially for overlapping processes/timers, access to destroyed objects, undefined optional properties, and invalid bindings. Updating a Repeater model may destroy its delegate: restore bindings and capture arguments before the call that updates the model. Do not continue using the delegate after that call.
 
 ## Review code and QML warnings
+
+Classify production diagnostics separately from fixtures/stubs and distinguish occurrences, unique source locations and diagnostic signatures. A per-file import or PanelWindow metadata warning is not a reproduced runtime defect. Measure helper/timer cost before optimization; shared-host CPU or a projected per-call cost does not establish Rise-only steady-state usage. See the bounded audit and hardening recipes in the reference below.
 
 For warning reviews, batch fixes, shared-panel contracts, or differences between tests and the installation, read [references/code-review.md](references/code-review.md). It also covers isolated fixtures, resource paths, and preserving settings during native checks. Distinguish runtime errors, code warnings, and metadata limitations; a lower count does not prove a fix.
 

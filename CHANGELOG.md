@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.7 — 2026-11-17
+
+- Updated the verified application baseline to published and installed Rise 1.1.6, including the independent 79-group source and installed-tree runs.
+- Documented plain-Arch explicit-intent/confirmation guards, argv-safe cache persistence and precise negative-regression boundaries.
+- Added bounded audit coverage, warning classification and performance-attribution rules without claiming every file is an executed test or every warning a runtime bug.
+- Recorded active-variant Elsewhen color parity and safe manager updates with complete backup, preserved superseded local edits and post-update state verification.
+- Rebuilt and validated the skill archive and checksums. No new cross-agent or marketplace certification is claimed.
+
 ## 0.1.6 — 2026-11-16
 
 - Corrected the support boundary: audited main 1.1.5 is horizontal-only; vertical implementation notes are historical/conditional, not current main instructions.
