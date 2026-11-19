@@ -1,5 +1,7 @@
 # Validation report — 0.1.8
 
+> Unreleased source-only correction: after 0.1.8 packaging, the skill text was updated to remove obsolete read-only Health preservation guidance. The 0.1.8 `dist/` archive and checksums were intentionally not rebuilt; package checks below describe 0.1.8 only and do not validate this source-only follow-up.
+
 Skill-package validation date: 2026-11-19. This revision synchronizes the published skill text and bundled references with the authoritative Hermes `team-leader` rise-bar skill after the 2026-11-18/19 review. It is a documentation-only update: no Rise source test suite, installation, plugin reload, service change, publication or preference mutation was performed for this revision.
 
 Package checks for 0.1.8: frontmatter/version agreement across `VERSION`, `SKILL.md`, `README.md` and `CHANGELOG.md`; relative Markdown links resolve; fenced Bash blocks parse; archive members use safe relative paths and match source bytes after extraction; all `dist/SHA256SUMS` entries verify. Earlier application evidence below remains historical and is not revalidated here.

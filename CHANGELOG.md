@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Superseded the 0.1.8 read-only Health preservation guidance after the user asked to remove the ControlPanel Health tile and overlay entirely in V1/V2. Search and Health are now both negative contracts in the skill source; the Health capability facade/logic, overlay component and Health-only tests/fixtures are gone.
+- Kept the generic overlay keyboard recipe but removed references to the retired Search/Health openers.
+- Documentation-only follow-up: no `VERSION` bump, archive rebuild, tag, release, push or installed-plugin change.
+
 ## 0.1.8 — 2026-11-19
 
 - Synchronized the skill guidance with the authoritative Hermes `team-leader` profile after the Shibumi→Rise review, covering V1/V2 acceptance gates, read-only Health preservation, Search removal, native fixture boundaries, scanner ownership, Bluetooth/controller and update/deployment evidence rules.
