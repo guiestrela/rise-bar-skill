@@ -1,3 +1,9 @@
+# Validation report — 0.1.8
+
+Skill-package validation date: 2026-11-19. This revision synchronizes the published skill text and bundled references with the authoritative Hermes `team-leader` rise-bar skill after the 2026-11-18/19 review. It is a documentation-only update: no Rise source test suite, installation, plugin reload, service change, publication or preference mutation was performed for this revision.
+
+Package checks for 0.1.8: frontmatter/version agreement across `VERSION`, `SKILL.md`, `README.md` and `CHANGELOG.md`; relative Markdown links resolve; fenced Bash blocks parse; archive members use safe relative paths and match source bytes after extraction; all `dist/SHA256SUMS` entries verify. Earlier application evidence below remains historical and is not revalidated here.
+
 # Validation report — 0.1.7
 
 Skill-package validation date: 2026-11-17. Application evidence recorded on 2026-11-16: verified Rise 1.1.6 release/main/installed checkout `59e9cd5352b1e4ec42b0383e62107088b7ebd0af`. Application PR #4 was read back as merged; its version-triggered release workflow completed successfully, and remote main/tag/release matched. This skill revision documents that implementation; it is not an additional bar update, a new application-suite run or a new independent cross-agent evaluation.

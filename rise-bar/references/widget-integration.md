@@ -32,13 +32,14 @@ empty slots and base/extra metadata. Check earlier migration helpers too: a
 validator that only accepts older IDs can reject the new saved layout before
 its own migration runs.
 
-Read capacities and registered IDs from the current layout schema rather than
-copying counts from an older release. Empty targets show only in edit mode
-and collapse without gaps when locked. Preserve all registered widget IDs,
-including independent Indicators and World Clock entries where present, while
-accepting repeated empty strings. Extend legacy region lists and split flags
-in place, and check tray placements before inserting newly registered modules.
-Find G8 anywhere in the center model rather than assuming index zero.
+The local slot expansion gives V1 32 positions (15 left, 3 center, 14 right),
+including four empty targets per side and one empty center target by default;
+the other center position holds the independent G23 Indicators module.
+Empty targets show only in edit mode and disappear without leaving gaps when
+locked. V2 allows up to 20 slots per side and 8 in the center through its `+`
+controls. Preserve the 23 unique widget IDs (including independent G23 Indicators) while accepting repeated empty
+strings; extend legacy region lists and split flags in place. Find G8 anywhere
+in the center model rather than assuming it occupies index zero.
 
 Drag hit testing must use mapped screen bounds at both corners when the bar
 scales to fit an output. When a widget leaves a Loader, its old implicit width
@@ -69,7 +70,9 @@ RGBA channels.
 
 Keep typography, spacing, separators, progress tracks, icons and badges within
 the same adapter contract as the rest of the panel. Compare neighboring Rise
-panels rather than inheriting an external plugin's large hero typography.
+panels for normal integrations. For an explicitly requested native-parity port,
+pass the original component's inspected Style tokens through the shared host
+without restyling unrelated Rise panels.
 The current OneDrive presentation uses a name-only `OneDrive` header above a
 one-pixel `sep` line, with status and pause controls below it. Its title is
 13 px with 2 px tracking, and its usage meter uses `sep` for the track and
@@ -108,6 +111,23 @@ it on destruction. Keep it reactive across theme/variant changes. Use explicit
 namespaces for local singleton types such as Color, which can collide with Qt
 types. Register imported directory components in qmldir: qmltestrunner's
 implicit lookup can succeed while Quickshell's scanner fails.
+
+## Status-indicator presentation and validation
+
+1. Inspect both `variants/V1/modules/IndicatorsWidget.qml` and the V2 adapter, then trace `shared/components/IndicatorsWidget.qml` and its coordinator. Identify whether the reported defect concerns the idle marker, active glyphs, hover expansion or slot placement before editing. Change marker presentation in the adapters without changing shared action dispatch or persisted layout. Preserve each variant's palette and capsule contract.
+2. Extend the existing contract test before editing production. Check idle visibility, unchanged neutral orientation, disappearance when an indicator activates or inactive controls are revealed, return after deactivation, and collapse when the module is disabled. Update every obsolete directional assertion, including assertions after state transitions; changing only the first marker assertion leaves contradictory test expectations.
+3. Render idle, one-active and several-active states with and without reveal in both adapters. Derive the fixture coordinator's `hasActive` from the simulated statuses, not an absent member or an unrelated constant: otherwise a marker may remain visible over active glyphs while aggregate centering still passes. Check actual glyph ink against capsule bounds, not just the centered Text item. Retain active/revealed glyph and action assertions when extending the fixture to idle cases; skip an action target only when that state legitimately has no target.
+4. Run the focused checks, then freeze the candidate and run the broad suite:
+
+   ```bash
+   python3 tests/test-omarchy-indicators.py
+   python3 tests/test-indicators-visible-centering.py
+   python3 tests/test-v2-inline-indicators.py
+   bash tests/run-plugin-checks.sh
+   ```
+
+   Verify these entrypoints in the current checkout. Use `INDICATORS_ARTIFACT_DIR` with the render driver to retain images for inspection. Treat legacy vertical fixture cases as component coverage, not proof that the application supports side bars. Distinguish signal-handler tests from actual pointer-event acceptance.
+5. After authorized deployment, compare both installed adapters, verify lifecycle readiness and preference/plugin snapshots, and inspect a fresh crop of the bar. An active status glyph correctly suppresses the idle marker; preserve it and report that live state rather than mistaking it for stale code. Validate the otherwise hidden idle state in the inert rendered fixture, without toggling real DND, stay-awake, recording or security settings just to obtain a screenshot.
 
 ## OneDrive contracts
 
@@ -152,67 +172,79 @@ old wrapper killed it at 30 seconds. Measure before changing a limit; do not
 hide failures, delete caches or restart services indiscriminately. Restarting
 the shell reloads UI code; it does not itself repair the OneDrive connection.
 
-## World Clock / Elsewhen
+## Native clock parity and reactive defaults
 
-When original parity is requested, compare against the actual original under the installed Omarchy shell's
-`plugins/panels/elsewhen/`, not an obsolete Downloads copy. Read its manifest,
-Panel, HeroTitle, Globe, GlobeFooter and CityRow, and preserve attribution for
-ported components and data.
+1. Read the installed native panel, model, hero and globe before changing the port. Distinguish original behavior from Rise-specific storage, IPC, surfaces and safety confirmation. Compare parsed catalogs as well as clock calculations; equal results for a bounded model matrix do not prove equal catalogs or UI.
+2. Supply the shell's `Commons.I18n.formatLocale` and model word callbacks through the shared host. Include `t`, `tn`, number formatting, AM/PM and locale-aware dates where the inspected model supports them. Use that locale consistently for automatic hour format and units, not the process locale in one layer and shell locale in another. Preserve an absent setting as absent: inserting `hour24: false` during defaults merging turns an automatic choice into an explicit override. Test unset settings with `en_GB` and `en_US`, then explicit true/false under the opposite locale, including persistence/reopen.
+3. Keep a standalone content fallback for inert component tests and wire real I18n/Style in the host. Extend composed fixture singletons when the host starts using new members, then run the real native import graph too. Test live locale/translation/token changes through V1/V2 in both orientations; matching initial English defaults can hide disconnected bindings.
+4. Preserve the inspected meaning of `smoothMotion`: in Elsewhen it reduces labels/graticule while dragging or animating; it does not disable animation when false. Keep global motion policy through `Commons.Style.duration`. Use pointer press/release tests to show labels suppressed during movement and restored at rest, plus duration tests with smoothMotion disabled.
+5. Resize the globe's owning container with its Canvas. For the inspected native expanded stage, use `Style.space(378)` rather than a separate fixed height; account for the Rise wrapper's padding independently. Assert containment and click Back after expansion: a centered Canvas taller than its parent can intercept the controls above even when its own height assertion passes. Measure mapped bounds before blaming scrolling or changing the fixture viewport.
+6. Preserve the wrapping timezone confirmation and test it with a long IANA zone at narrow widths. Simulate command success/failure; never change the real timezone merely to verify text or callbacks. Report untranslated Rise-only controls and intentional extra actions instead of claiming complete localization or exact parity.
+7. Compare the native painting pipeline, not just palette values, when matching globe labels. The native reference paints light text over the sea and repaints dark text through a coastline clip over land; a single foreground-colored pass can match the theme yet become illegible on pale continents. Reuse the inspected projected land geometry and test settled sea/land/coast labels, selection hitboxes and motion-detail suppression before calling the port equivalent.
+8. Test the longest representative city list with the same viewport and scale as the reference. A partially visible Add action is not automatically a layout defect, but neither is a scrollbar proof of access: reveal the entire action with real scrolling, click it and verify search/focus. Change density or panel bounds only after comparing equivalent scenes; do not shrink typography merely to conceal inaccessible content.
 
-If the user approves the current central content and requests only Rise styling, preserve that composition and stop the older parity work. For the separate `Elsewhen` heading, native font/close control, 12px separator gap and connected-surface acceptance, follow [vertical-bar.md](vertical-bar.md). Keep outer-header styling separate from the existing `World Clock` hero and city/globe behavior.
+### Tight clock test loop
 
-Keep state and asynchronous work in `shared/services/ElsewhenService.qml` and
-`ElsewhenProcessAdapter.qml`; presentation lives in the shared Elsewhen panel
-and `shared/integrations/elsewhen/`. V1/V2 wrappers supply only genuine surface
-and placement differences. Do not merge the variants' entire Themes to avoid
-two small adapters.
-
-Validate city search/add/remove/reorder, duplicate-zone identity, people and
-profile enrichment, 12/24-hour and temperature units, daylight scrubbing,
-keyboard focus/Escape, home selection, globe drag/tilt/zoom/jump, opening spin,
-greetings, arc-caption fallback, moon animation, persistence and reopening.
-Keep system-timezone changes tied to a deliberate user action; never change
-clock settings merely to test the interface.
-
-Resolve unset format and units from the shell locale and preserve explicit saved values. Use the effective hour-format value for the label, highlight and toggle target; a true/false preference lookup alone breaks the first click in a 24-hour locale. Keep `smoothMotion` separate from animation enablement: it reduces labels/graticule while dragging or animating, then restores detail. Route timings and expanded stage dimensions through native Style tokens, and resize the containing surface with its canvas so it cannot cover controls.
-
-Keep confirmation text fully wrapping above an independently wrapping action row, with content-derived height. Check long IANA zones at 200/260/316 px in both adapters. Audit Set zone and cross-zone Here selection separately; do not describe every timezone path as confirmation-gated without verifying the actual dispatch chain. Simulate system changes and failures with an inert backend rather than changing the user's real clock.
-
-For original-versus-port captures, match time, locale, scale, width, colors, selected/home city and the complete catalog. A fake service with two city points cannot establish label-density parity against the original's full catalog. Separate actual omissions from unselected footer state, and record intentional Rise frame/controls/storage differences. Neither model equality nor a green adapter suite proves exact appearance.
-
-The Rise-owned IPC target is `quickshell-rise.elsewhen`; do not duplicate
-`omarchy.elsewhen`. Use `open` rather than `show`, which collides with the
-Quickshell CLI subcommand. Read-only `times`, plus authorized `open`/`close`,
-can verify the installed target without modifying city preferences.
-
-Keep notification formatting and native `qs.Commons` translation imports in
-the production host. Offscreen tests must explicitly substitute external
-translation/notification I/O, not delete the feature. Supplement them with
-native compilation of the unmodified import graph. Inspect deterministic
-V1/V2 captures in both orientations and the live installed panel; report
-which interactions were simulated. Public weather/profile requests are not
-proof of private-account access or successful OS-timezone mutation.
-
-Focused commands from the Rise checkout, using its existing scratch policy:
+Use a named Qt Quick test while diagnosing one content boundary; the selector
+avoids rerunning the entire interaction suite on every iteration:
 
 ```bash
-python3 tests/test-elsewhen-panel-content.py
-python3 tests/test-elsewhen-service.py
-python3 tests/test-elsewhen-process-adapter.py
-python3 tests/test-elsewhen-ipc.py
-python3 tests/test-elsewhen-panel-adapters.py
-python3 tests/test-display-integration.py
+QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software QT_QPA_PLATFORMTHEME='' \
+  /usr/lib/qt6/bin/qmltestrunner \
+  -input tests/tst_elsewhen_panel_content.qml \
+  ElsewhenPanelContent::test_smooth_motion_reduces_labels_only_while_moving
 ```
 
-## Bluetooth boundaries
+Confirm the runner path and import prerequisites for the current checkout. If the content imports `qs.Commons` or other host modules, prepare the same inert import tree as the official test wrapper and pass its root through `-import`; the direct selector above does not create those modules. Prefer passing the selector through the wrapper when it supports that operation. Do not remove production imports to recover the shorter command. After the focused loop, run the content, service, adapter and native-import runners and the broad suite.
+Capture adapters with `RISE_ELSEWHEN_CAPTURE_DIR` when supported. Keep scratch
+under the active profile's scratch directory. If a generated IPC socket path is
+too long, use a short symlink in the accessible runtime directory pointing to
+that scratch, verify its target, and remove only that alias afterward. Before
+native Wayland probes, verify the compositor socket and export its actual name
+when the caller lacks `WAYLAND_DISPLAY`; never infer that a missing variable
+means the graphical session is stopped.
 
-Resolve the owning `hciN` through BlueZ Adapter1.Address before using
-`bluetoothctl select`, which expects a controller address. Await connection
-and disconnection method replies; piping `quit` immediately afterward can
-end the client early. Read back actual connection state before claiming success.
-If direct pairing outside Rise causes kernel controller errors or power
-cycling, stop repeated trials and investigate the adapter/driver separately.
-Do not erase unrelated pairings or reset a connected mouse without consent.
+## Country-selector keyboard assessment
+
+Use this as an assessment and implementation-test recipe, not a claim that keyboard support is already deployed.
+
+1. Load the user's screenshot, locate both country selectors in `shared/panels/NordVPNPanel.qml`, and trace their selection callbacks to `NordVpnController.qml`. Inspect the input types, focus ownership, ListView current-index/highlight behavior and the panel's Escape handler. A styled Rectangle with MouseArea does not inherit text editing or keyboard navigation; exclusive window keyboard focus alone does not supply a focused selector.
+2. Report what exists separately from what can be added. When implementation is authorized, preserve the active V1/V2 styling and share the behavior rather than duplicating it in variant adapters. Keep the country list supplied by the controller as the selection authority.
+3. Define the keyboard contract before editing: Tab/Shift+Tab moves focus; typing filters the list without case sensitivity and can match display spaces against canonical underscores; Up/Down moves a visible highlighted candidate; Enter confirms only that candidate; Escape first dismisses the active chooser and restores its committed selection instead of immediately closing the whole panel. Keep only one chooser active so typing and navigation have an unambiguous owner. Do not promise translated country-name aliases unless explicitly implemented and tested.
+4. Separate draft query/highlight from committed country. Confirm only a canonical member of `countryOptions`; never send arbitrary typed text to a VPN command. Selection may save the existing preference but must not invoke Connect, Apply, auto-connect toggling or any other service mutation. Preserve those explicit action boundaries.
+5. Before changing production, add RED-capable tests for each selector, focus transfer, substring/full-name filtering, no matches, canonical underscore names, callback rejection, list bounds/scrolling, Escape propagation, cancel/reopen and dynamic country-list availability. Use an inert controller and assert zero connect/apply/toggle calls from typing, arrows or selection. Send a second pointer click into the expanded editor to verify caret editing, not just initial typing. Exercise both fields and their action buttons in a height-constrained composed panel: scrolling a ListView internally does not prove that the picker or the next Tab target is visible in the outer panel. Deliver actual key events before claiming keyboard behavior; extracted-function tests establish only filtering/selection logic.
+6. Run the focused QtTest and native Quickshell panel drivers before the broad suite:
+
+   ```bash
+   python3 tests/test-nordvpn-country-keyboard.py
+   python3 tests/test-nordvpn-selection-ui.py
+   node tests/qr04n-panel-v1.mjs
+   bash tests/run-plugin-checks.sh
+   ```
+
+   Verify these entrypoints against the current checkout. Give native drivers the actual accessible Wayland runtime; keep the controller inert. Preserve production directory imports in the native fixture and extend explicit dependency-copy lists when introducing a shared picker. A flat materialized QtTest can resolve unqualified sibling types that fail in Quickshell; use explicit namespaces such as `import "." as CommonComponents` and `CommonComponents.UiText`. Keep native panel instantiation mandatory in the broad runner, not merely a one-off probe or lazy compile check. Freeze the candidate only after both event behavior and native imports pass.
+7. Before an authorized local application, inspect the plugin watcher's reload scope and ask once if application requires broader shell-plugin reload permission. Refresh preference hashes and enabled-plugin snapshots immediately before writing, rather than comparing against a stale development-start snapshot that may predate user edits. Back up the old panel outside the watched tree, install a newly referenced component before its consuming panel, then compare installed bytes and inspect fresh reload logs. Read `quickshell-rise.variant` current/state/error and `quickshell-rise.lifecycle` ready through `omarchy-shell`; do not guess a shortened IPC target. Verify the active variant and preferences remain unchanged. Report isolated key-event acceptance separately from live-panel interaction and real VPN connectivity; never reconnect the user's VPN merely to test this UI.
+
+## Bluetooth command boundaries
+
+1. Read `bluetoothctl list`, `bluetoothctl show` and the current controller inventory before changing pairing state. Distinguish a missing/off adapter from a panel helper passing the wrong controller identifier.
+2. Validate `hciN` and the device MAC before building paths or commands. Resolve the selected adapter with:
+
+   ```bash
+   busctl --system --timeout=5s get-property org.bluez "/org/bluez/$adapter" org.bluez.Adapter1 Address
+   ```
+
+   Validate the typed address reply. `bluetoothctl select` takes that address, not the kernel name `hci0`. Prefer the BlueZ property contract over assuming a particular sysfs address attribute. Fail before device actions if lookup fails.
+3. Keep asynchronous command clients alive until their terminal response. Piping `connect` followed by `quit` can end the client before connection completes. For an already known device, a synchronous method boundary is:
+
+   ```bash
+   busctl --system --timeout=11s call org.bluez "$device_path" org.bluez.Device1 Connect
+   ```
+
+   Construct `device_path` from the validated owning adapter and MAC, with colons replaced by underscores. `Disconnect` uses the same interface. Bound the subprocess separately, propagate BlueZ errors/nonzero exits, and keep the UI watchdog consistent. This verifies method completion, not usable audio or input.
+4. Add regressions for controller resolution, non-default adapters, missing/invalid lookup replies, timeouts and method failure propagation using inert subprocesses. Read back deployed helper bytes. A real read-only `info` query establishes lookup/read access only; do not label it a successful connection test.
+5. After authorization to connect a named device, read back `Device1.Connected`, `Paired`, `Bonded` and `ServicesResolved` on the same object. Report the returned failure rather than converting command dispatch into success. Obtain explicit consent before removing a pairing or power-cycling the controller; resetting the controller can interrupt unrelated mice and audio.
+6. If the live attempt also fails outside the panel, inspect `journalctl -b -u bluetooth` and narrowly filtered kernel Bluetooth logs. Treat controller hardware-error events as evidence to investigate the controller/driver/firmware, not proof of physical damage or a panel-only bug. Contradictory pairing responses and failed discovery are unresolved diagnostic evidence, not a validated recipe for clearing records or repeatedly resetting services. Stop reporting a software patch as an end-to-end fix when real connection acceptance fails.
 
 ## Focused validation
 
@@ -240,7 +272,7 @@ Compile the real import graph for both variants with the existing inert
 integration probe when session access is available:
 
 ```bash
-TMPDIR=/tmp python3 tests/test-display-integration.py
+python3 tests/test-display-integration.py
 ```
 
 This probe compiles variants and exercises a simulated display controller; it

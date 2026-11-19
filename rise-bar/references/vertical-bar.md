@@ -1,6 +1,6 @@
 # V1/V2: orientation, styles, and panels
 
-Use this reference for panel appearance and conditional orientation work. **Verified main/release 1.1.6 supports Top/Bottom only:** `barVertical` is fixed false, Left/Right are rejected and `VerticalBarContent.qml` is absent. The vertical rail/width procedures below describe a historical or different feature candidate whose enabling revision is not established here; do not use them as current main instructions. Check the actual revision and `tests/test-horizontal-only-bar.py` first. Approved popup/header/capture guidance remains applicable independently of vertical support.
+Use this reference for panel appearance and conditional orientation work. Establish support from the current Themes, component files and `tests/test-horizontal-only-bar.py` where present. If `barVertical` is fixed false, Left/Right are rejected and `VerticalBarContent.qml` is absent, the vertical rail/width procedures below do not apply to that candidate. Do not reintroduce the feature to satisfy legacy tests. Approved popup/header/capture guidance remains applicable independently of vertical support.
 
 Paths beginning with `variants/V2/...` are relative to the repository root.
 Other module paths are relative to `variants/V2/`.
@@ -34,41 +34,41 @@ G16/G18 in V2. Do not transfer orders or preferences between these IDs.
 
 ## Visual and interaction contracts
 
-### Restyle an approved popup
+### Restyle an approved popup without changing its content
 
-1. Freeze the approved middle: city list, globe, catalog, controls, positions and behavior. Treat the outer frame, header and named action buttons as separate targets. Do not resume an older redesign or original-parity goal after the user approves the current composition.
-2. Read the actual reference adapters, such as `variants/V2/panels/WallpaperManagerQuickPanel.qml` and `NordVPNPanel.qml`. Reuse their `ConnectedPanelSurface`, shadow, owner-active binding, anchor, reveal and `SidePanelPositioner` contract. A tooltip with similar colors is not the reference panel renderer.
-3. Keep V2's popup fill on `root.bg`; `barBg` can carry frost/opacity intended for the bar. Do not alter the compositor, global theme or approved content to mask a local surface mismatch. Respect V1's separate surface contract.
-4. Derive named action controls' idle/hover/focus fills, text, border, font and radius from the active variant. Preserve `Add a city` and `Jump to a city` positions and functions. A selected tab in an example does not authorize a permanently accented action button.
-5. Add a geometry or real-pointer regression before changing production code, verify RED, then apply the smallest patch and verify GREEN. Wait for QML layout readiness before subsequent pointer events; do not replace a click with a direct handler call merely to pass the fixture.
+1. Record the approved inner composition and the exact remaining targets: frame, connector/anchor, or named action buttons. If a new instruction approves the content, stop older parity work on its density, catalog, controls and layout. Keep styling and behavioral acceptance separate.
+2. Trace the actual reference adapter and renderer. A V2 tooltip using `bg`, `panelOuterBorderColor` and a radius is not equivalent to a panel using `ConnectedPanelSurface`. Inspect the reference's frame transparency, surface slot, shadow, connector, owner-active binding, target anchor, reveal progress and stacking. Reuse the chosen contract rather than approximating its shape with an unrelated Rectangle. Consult references/code-review.md for reparented-surface ordering.
+3. Keep variant decoration in the adapter and approved content in the shared body. When a connected surface owns the fill and outline, avoid an opaque duplicate card or border that can obscure the connector. Preserve `SidePanelPositioner`, per-output anchors and horizontal/vertical restoration. Do not migrate every variant to one palette merely because a reference uses it.
+4. For action-button restyling, derive idle/hover/pressed fill, text, accent, border, font and radius coherently from the active variant's existing button contract. A selected tab or toggle in the example shows the active state, not an action's resting appearance; do not make actions permanently accented or copy the theme's current accent as a constant. Do not combine `Commons` text/border/idle colors with only a Rise accent and call that variant styling. Test with deliberately different root and Commons palettes, then change the theme after creation to verify reactive bindings. Keep the approved native-content palette independent when only buttons or frame are in scope.
+5. Diagnose color differences along the rendered path: bar fill, popup surface, content background and action fill. `barBg` can use frost/opacity while `bg` remains nearly opaque, so identical RGB values need not produce identical pixels. Compare the same backdrop, orientation, scale and reveal state; do not blindly replace `bg` with `barBg` or recolor the whole content to chase a screenshot.
+6. Establish settled runtime before capturing. Through `terminal`, query `quickshell ipc --pid "$pid" call quickshell-rise.variant current`, then `state`, `error`, and `quickshell-rise.lifecycle ready` on the actual integrated-shell PID. Use bounded reads through the loading transition. Inspect the implementation of display helpers before interpreting them: `lifecycle.version` may fall back to V1 while `runningVariant` is temporarily empty. Do not change saved variant, rewrite identical files, clear caches or restart repeatedly because of that transient label.
+7. Verify real render and input before acceptance: open the existing popup through its supported IPC, wait for settled layout/reveal, capture the actual surface, and inspect the requested contour and controls. A matching installed file, palette binding or artificial-color fixture is not proof of the live result. Use available capture tools before requesting another user screenshot; stop at an explicit tool-approval denial rather than retrying through a different path. Preserve functions and preferences and remove temporary runtime instrumentation before delivery.
 
-### Active-variant content colors
+### Match content colors to the active variant
 
-Check both live IPC and saved variant before interpreting a screenshot's variant name. A V2 reference can be shown while V1 is actually active. Clarify only if that changes whether to preserve or switch the selected variant.
+1. Load the supplied screenshot and separately identify branding, inner hero, city rows, secondary labels and actions. Query the actual integrated-shell `quickshell-rise.variant current` and lifecycle readiness, then compare the saved active variant; a light header with green content can come from two palette sources rather than a stale screenshot or failed theme reload.
+2. Trace the variant adapter's `contentPaletteOverride`, the shared body's palette fallback and the row's `foreground`/`surfaceBase` bindings. If V1 falls back to Commons while V2 injects Rise tokens, changing V2 or merely recoloring the header cannot fix the current V1 content. Clarify a genuinely ambiguous variant target once; preserve the user's current variant unless switching was explicitly chosen.
+3. For the approved active-bar Elsewhen contract, supply `bg: root.bg`, `ink: root.fg`, `accent: root.accent`, `seal: root.seal`, `sep: root.sep`, `fillIdle: root.fillIdle`, `fillHover: root.fillHover` and `sumi: root.muted` through the adapter's `contentPaletteOverride`. Keep existing fonts, city order, controls and variant-specific frame geometry; do not hardcode the screenshot's RGB or copy an entire Theme.
+4. First make a composed regression fail against deliberately distinct Commons and root palettes. Check both adapters' palette tokens, rendered city-row foreground/background and reactive changes to root ink/seal after creation. Search the fixture for older V1-stays-Commons assertions and update that superseded color contract without removing row, font, frame or interaction coverage. Run adapter and shared-content suites after the change.
+5. Apply only the affected production adapter after comparing its installed baseline and backing it up. Preserve the live variant and preference hashes, perform authorized component replacement, then capture the actual popup and inspect city/time/hero text as well as branding. Deliver a tight popup crop. Label earlier audit results with their old candidate fingerprint; they do not automatically cover a later color patch.
 
-For the approved Rise Elsewhen palette, both adapters pass their active root's foreground/background, muted, accent, seal, separator and idle/hover fills through `contentPaletteOverride`. Do not let V1 silently fall back to Commons while V2 uses Rise, or hardcode the example's green/accent. Preserve variant-specific frame geometry and approved fonts/layout. Test real city-row foregrounds and reactive ink/seal changes in both adapters, not only the new header.
+### Add panel branding above an approved content header
 
-### Elsewhen header contract
+1. Read the shared Wallpaper Manager header before matching its style. Use a separate left-aligned UiText title with active `root.mono`, `root.ink`, 13px, `Font.Medium`, letter spacing 2 and a 24px row. Reserve room for a right-aligned `✕` using `root.mono`, 12px, muted at rest, seal on hover and a 120ms color transition. Expand the hit area by 8px and retain accessible naming plus keyboard activation. Close through the existing panel visibility path; do not replace the inner World Clock heading or globe target.
+2. Move the existing one-pixel separator below the title row with a 12px gap, leaving the home caption and remaining content in their original relative order. Include positioner spacing in the measurement: a Column with 2px spacing and an 8px intervening spacer yields the intended 12px gap. Do not enlarge all Column gaps or shift the close icon vertically to create the space. Derive header height from the containing Column to avoid overlap.
+3. Before production edits, add a failing composed-adapter assertion for the exact title, typography and geometry. Use `mapToItem(header, 0, 0)` to compare positions in a common coordinate system: title-row bottom plus the intended gap <= separator top, separator bottom <= home-caption top, caption bottom <= inner-heading top. Exercise actual hover/click on the production close control in both adapters and assert panel dismissal; keep physical live input acceptance separate from fixture results.
+4. Run both the panel-adapter and shared-content runners after the change. Apply only the changed production file with a pre-change backup; retain unrelated installed changes.
+5. After settled reload, inspect the exact new title in a current native capture. If it is absent despite matching installed bytes, follow the component-replacement gate in SKILL.md rather than editing the layout again. Deliver a tight header crop to demonstrate the requested ordering without exposing unrelated windows.
 
-For the approved Rise header, follow the implementation in `shared/panels/WallpaperManagerQuickPanel.qml`, not the original Elsewhen hero typography. Confirm these values against the current reference before reusing them:
+### Standardize module width against the Control Center
 
-- Keep a separate literal `Elsewhen` heading above the separator; retain the home caption and `World Clock`/globe composition below it.
-- Use shared `UiText`, `root.mono`, `root.ink`, 13px type, `Font.Medium`, letter spacing 2, a 24px heading row and elision before the close control. Do not substitute the content's Commons font or hardcode a machine's font name.
-- Place `✕` at the right: `root.mono`, 12px, `root.muted` at rest and `root.seal` on hover, with a 120ms color transition and an 8px expanded hit area. Close the existing panel through its visibility/close path; do not terminate the shell. Preserve accessible naming and keyboard activation.
-- Leave **12px between the title row and separator**, without moving the close icon out of vertical alignment. Account for positioner spacing: with a 2px Column spacing, an 8px spacer contributes a total gap of 2 + 8 + 2 = 12px. Do not increase spacing across the approved central content.
-- Assert font family, size, weight, letter spacing, color, row/divider order and gap. Exercise real hover/click on the production close control in V1/V2 fixtures, plus bounds and existing city/globe interactions. Distinguish these fixtures from a physical installed-session click test.
+1. Measure the rendered Control Center's outer capsule in the selected variant and style, then identify the shared rail/surface property that owns that width. Do not copy a glyph's width or the window's exclusive zone as the module-width reference.
+2. Enumerate every module in the variant registry and check its outer background, Loader and content bounds. Apply one coherent width contract to the vertical surfaces, including small icons, Indicators, tray, clock, workspaces, media and sliders. Keep variant-specific colors, borders and height behavior.
+3. Center content within that common surface and test overflow, clipping, hover and pointer targets. Keep long modules tall enough for their controls rather than shrinking or stretching them into square tiles.
+4. Test Left/Right, affected styles, disabled/empty states and restoration to Top/Bottom. Compare actual rendered widths and retain a per-module result so a few passing examples do not stand in for all modules.
+5. Apply validated changes with backup and re-check the live variant immediately before deployment. Preserve current ordering, theme and user preferences; do not switch the user's bar to another variant for test evidence.
 
-### Capture and installed-component acceptance
-
-1. Discover the actual integrated-shell PID. Through `terminal`, query `quickshell ipc --pid "$pid" call quickshell-rise.variant current`, `state`, `error`, and `quickshell-rise.lifecycle ready`. Wait for the settled active/ready state before interpreting an empty or fallback variant during reload.
-2. Distinguish backend failure from absent UI. An X11 window enumerator may return zero windows for Wayland layer-shell panels. If Hermes computer use is available, run its doctor yourself. When authorized, use an available session-native capture route such as `grim`; never switch routes to evade an explicit approval denial.
-3. Open through the existing `quickshell-rise.elsewhen open` IPC or the reference panel's existing UI. Do not assume Wallpaper Manager has an IPC opener or confuse its manager with the wallpaper picker. Batch open, settled reveal, capture and close to avoid focus changes invalidating the image. Do not select wallpapers, change VPN state or mutate preferences just to compare panels.
-4. Match output, scale, backdrop and reveal state. Popup anchors can differ, so align the actual sampled coordinates. Moving a pointer between outputs can invalidate ownership or hit coordinates; save and restore pointer position for authorized foreground input. Stop coordinate retries if the popup disappears, rather than clicking through to another application. A successful dispatch alone does not establish an input effect.
-5. Compare static, constant-fill samples away from content and edges. Label alpha fits as estimates; reject degenerate backgrounds, out-of-range results or large residuals. Old images do not establish current runtime state, and a fill estimate does not identify the responsible QML/compositor layer. Do not claim whole-panel pixel-perfect identity from a few matching samples.
-6. Verify component replacement, not only installed bytes or `ready=true`. If an authorized automatic reload still renders old QML, preserve the evidence and use one supported `omarchy restart shell` when within scope. Discover the new PID afterward; do not reuse the old one, clear preferences or repeatedly rewrite unchanged files.
-7. Compare scoped preference hashes and enabled plugins, installed source bytes, fresh logs and the actual requested header/contour. Remove temporary diagnostics. Report live render, pointer fixtures and unconfirmed live actions separately; a visible close icon does not establish a successful physical click.
-
-In V2, `verticalBarWidth` is 36 px for Full/Dock/Notch and 40 px for Fit.
+The inspected V2 geometry uses `verticalBarWidth` of 36 px for Full/Dock/Notch and 40 px for Fit; read the current contract before relying on these values.
 Fit keeps an outer gap of 2 px on each side; content uses side margins of
 1 px, preserving 34 px internally across all styles. When changing the width,
 check widgets, the mask, the exclusive zone, and panel anchors; also update
@@ -82,9 +82,26 @@ Workspaces reuse `WorkspaceWidget.qml`: a column on the sides and a row in Top/B
 
 For the expanded slot capacities, empty-target persistence and scaled drag hit testing, see [widget-integration.md](widget-integration.md). V1 empty targets use the rail surface vertically and are visible only while editing.
 
+For vertical slot editing, trace the complete horizontal begin/move/end/cancel
+contract before porting it. A vertical press/release swap is not equivalent to
+dragging with ghost, hit testing, cancellation, tray support and persistence.
+Use vertical delegates as targets, map both rectangle corners, and account for
+scroll, clipping, scaling and separate tray windows in a consistent coordinate
+space. Preserve each variant's fixed/base/extra slot rules instead of creating
+a second ordering schema. Acceptance tests must deliver pointer events to the
+production handlers, not only call the swap function directly.
+
 Drag operations capture source and destination before changing models: the change may destroy the delegate. Do not access the delegate after the swap. Preserve anchor isolation and window recovery for each output.
 
 ## Evidence and tests
+
+### Stabilize pointer fixtures before diagnosing production
+
+1. Wait for `Instantiator`/positioner layout readiness before choosing pointer coordinates. Assert delegate counts against model counts, correct region/index metadata, expected module identities, and non-overlapping positions. Poll these invariants with a bounded timeout instead of relying solely on a fixed sleep; asynchronous layout can otherwise route a click into a different slot.
+2. Locate source and destination by model identity and region/index, then assert each GID against the fixture's explicit model. Do not infer a module's index from a default order: saved layouts and migrations can move it legitimately.
+3. Map the centers of the settled cells into the event target's coordinate space. After press, assert the production drag state and source model/index; after movement, assert destination model/index and visible feedback; after release, assert order, persistence and cleanup. This identifies the first broken boundary rather than treating a wrong source index as proof of a production defect.
+4. Cover an occupied target, an empty target, tray movement and cancellation, then rerun horizontal interaction regressions. Use inert services and the real production handlers.
+5. Report behavioral test names, not just QtTest totals: initialization and cleanup also count as passes. A synthetic pointer test proves the handler path in its fixture, not physical input on the installed Wayland bar. Keep broad-suite failures visible even when the focused interaction tests pass.
 
 Run relevant tests without touching real accounts, monitors, or services:
 
@@ -92,6 +109,9 @@ Run relevant tests without touching real accounts, monitors, or services:
 python3 tests/test-vertical-bar-layout.py
 python3 tests/test-v1-vertical-bar.py
 python3 tests/test-v1-empty-slots.py
+python3 tests/test-v1-vertical-slot-interaction.py
+python3 tests/test-v2-vertical-slot-interaction.py
+python3 tests/test-tray-panel-runtime.py
 node --test tests/expanded-bar-slots.test.mjs
 python3 tests/test-vertical-workspaces.py
 python3 tests/v2-default-layout-regression.py

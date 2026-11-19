@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.8 — 2026-11-19
+
+- Synchronized the skill guidance with the authoritative Hermes `team-leader` profile after the Shibumi→Rise review, covering V1/V2 acceptance gates, read-only Health preservation, Search removal, native fixture boundaries, scanner ownership, Bluetooth/controller and update/deployment evidence rules.
+- Expanded all four bundled references from the same source; older local-only passages were superseded by the rewritten guidance rather than duplicated, while release metadata and version history were preserved locally.
+- No Rise application source, installation, configuration, branch, release or preference was changed by this documentation update.
+- Rebuilt the versioned archive and checksums. This is a documentation sync, not a new bar test run or cross-agent certification.
+
 ## 0.1.7 — 2026-11-17
 
 - Updated the verified application baseline to published and installed Rise 1.1.6, including the independent 79-group source and installed-tree runs.
